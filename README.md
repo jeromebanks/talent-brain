@@ -8,8 +8,14 @@ Instead of a flat resume PDF, Talent Brain creates a structured set of files cap
 
 ## What you need
 
-- [Claude Code](https://claude.ai/code) — the Claude desktop or IDE extension
-- An empty folder (or a new GitHub repo) where your profile will live
+**To build your own profile:**
+- [Claude Code](https://claude.ai/code) — desktop app or IDE extension (Mac, Windows, Linux)
+- Or **Claude Cowork** — browser-based, no install required
+
+**To view or interact with someone else's profile (recruiters, hiring managers):**
+- **Claude Cowork** — the profile owner shares a link and you join their session, no setup needed
+
+A GitHub account is helpful for sharing your profile but not required to get started.
 
 ---
 

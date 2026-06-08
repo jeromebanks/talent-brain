@@ -220,9 +220,60 @@ You can ask follow-up questions in plain language — Claude will navigate the p
 - See README at github.com/jeromebanks/talent-brain for full documentation
 ```
 
-## Step 5 — Confirm and orient
+## Step 5 — Create GitHub repo (optional)
 
-After generating all files, print a summary:
+Ask: "Would you like me to create a GitHub repo for your profile now? This makes it easy to share with recruiters and run Cowork sessions."
+
+If the user declines or wants to do it later, print the manual instructions and skip to Step 6:
+```
+To create it later:
+  git init && git add . && git commit -m "Initial Talent Brain profile"
+  gh repo create talent-brain --public --source . --remote origin --push
+  gh repo edit talent-brain --add-topic talent-brain-profile
+```
+
+If yes, ask: "Public or private?"
+- **Public** — recommended for active job searching; recruiters can view the profile directly and open it in Claude Code
+- **Private** — only people you explicitly invite can see it; you can still share via Cowork
+
+Then determine the repo name:
+- Default: `talent-brain`
+- If the name is already taken in their GitHub namespace (the `gh repo create` command will fail), suggest `talent-brain-profile` as the fallback, or let them choose
+
+Run these commands in sequence. Use `gh` CLI — it works on Mac, Windows, and Linux.
+
+**1. Initialize git and make the first commit:**
+```
+git init
+git add .
+git commit -m "Initial Talent Brain profile — [name]"
+```
+
+**2. Create the repo and push:**
+```
+gh repo create talent-brain --[public|private] --description "Talent Brain career profile — [name]" --source . --remote origin --push
+```
+If this fails because the name is already taken, retry with `talent-brain-profile` or the name the user chose.
+
+**3. Add the discovery topic** (makes the profile findable at github.com/topics/talent-brain-profile):
+```
+gh repo edit talent-brain --add-topic talent-brain-profile
+```
+
+**4. Print the result:**
+```
+✓ Profile repo: https://github.com/[username]/[reponame]
+
+To share with a recruiter or hiring manager:
+  Cowork:  Open this folder in Claude, start a Cowork session, share the link.
+           They join in a browser — no install needed on their end.
+  Direct:  Share the GitHub URL. If they open it in Claude Code,
+           the plugin loads automatically and they can run /talent-brain:showcase.
+```
+
+## Step 6 — Confirm and orient
+
+Print a final summary:
 
 ```
 ✓ Talent Brain profile initialized at [path]
@@ -246,7 +297,7 @@ Next steps:
   /talent-brain:excavate   — guided interview to capture your history from scratch
 
 Your profile is empty stubs until you run one of the above.
-The most important file to fill in manually: intent.md
+Most important file to fill in manually: intent.md
 ```
 
 ## Important constraints
