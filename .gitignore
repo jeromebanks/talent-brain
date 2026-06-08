@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# npm
+npm-debug.log*
+*.tgz
+.npm
+
+# macOS
+.DS_Store
+
+# Claude Code — local session settings (permissions, personal config)
+.claude/settings.local.json
+
+# Internal planning docs — not part of the public plugin
+INIT.md
+PRODUCT.md

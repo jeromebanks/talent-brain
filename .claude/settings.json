@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    {
+      "name": "talent-brain",
+      "source": {
+        "source": "local",
+        "path": "."
+      }
+    }
+  ]
+}

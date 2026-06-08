@@ -1,0 +1,14 @@
+# {{name}} — Career Profile
+
+> {{identity_statement}}
+
+## Core Files
+- [RESUME.md](RESUME.md): Full career index — experience, projects, skills summary, education
+- [intent.md](intent.md): Career preferences, interests, what I'm not interested in, directional goals
+- [skills.md](skills.md): Capability taxonomy with depth and recency signals
+
+## Experience
+
+## Projects
+
+## Extensions
