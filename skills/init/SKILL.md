@@ -182,6 +182,44 @@ Copy the Talent Brain SCHEMA.md from the plugin into the profile root. This make
 
 To do this: read the SCHEMA.md from the plugin directory (the same directory this skill is located in, two levels up: `../../SCHEMA.md`) and write it to `<profile-root>/SCHEMA.md`.
 
+### `.claude/settings.json`
+
+Create this file so the plugin loads automatically when anyone opens this profile folder in Claude Code — including recruiters who clone the repo. No manual plugin install needed on their end.
+
+```json
+{
+  "plugins": [
+    {
+      "name": "talent-brain",
+      "source": { "source": "github", "repo": "jeromebanks/talent-brain" }
+    }
+  ]
+}
+```
+
+### `CLAUDE.md`
+
+Create this file at the profile root. Claude Code reads it when the folder is opened. It orients Claude on what this repo is and what commands are available.
+
+```markdown
+# [name] — Talent Brain Profile
+
+This is a Talent Brain career profile. The talent-brain plugin is configured in `.claude/settings.json` and should load automatically.
+
+## For hiring managers and recruiters
+
+Run `/talent-brain:showcase` to get an interactive presentation of this candidate's background.
+You can ask follow-up questions in plain language — Claude will navigate the profile and answer.
+
+## For the profile owner
+
+- `/talent-brain:ingest [file]` — add a resume or LinkedIn export
+- `/talent-brain:excavate` — deepen a role with a structured interview
+- `/talent-brain:fit` — assess fit against a job description
+- `/talent-brain:generate` — produce a tailored resume
+- See README at github.com/jeromebanks/talent-brain for full documentation
+```
+
 ## Step 5 — Confirm and orient
 
 After generating all files, print a summary:
@@ -190,11 +228,13 @@ After generating all files, print a summary:
 ✓ Talent Brain profile initialized at [path]
 
 Files created:
-  RESUME.md       ← start here; fill in Summary and Core Competencies
-  intent.md       ← the most important file; be specific about what you do and don't want
-  skills.md       ← structured capability taxonomy
-  llms.txt        ← agent manifest; auto-updated as you add experience/project files
-  SCHEMA.md       ← schema reference for agents and contributors
+  RESUME.md                ← your career index
+  intent.md                ← fill this in manually — what you want next
+  skills.md                ← capability taxonomy
+  llms.txt                 ← agent manifest
+  SCHEMA.md                ← schema reference
+  CLAUDE.md                ← orients Claude when this folder is opened
+  .claude/settings.json    ← auto-loads the plugin for anyone who opens this folder
 
 Directories created:
   experience/     ← one file per employer
@@ -204,9 +244,9 @@ Directories created:
 Next steps:
   /talent-brain:ingest     — populate from an existing resume PDF or LinkedIn export
   /talent-brain:excavate   — guided interview to capture your history from scratch
-  /talent-brain:add-role   — add a single new experience entry
 
 Your profile is empty stubs until you run one of the above.
+The most important file to fill in manually: intent.md
 ```
 
 ## Important constraints

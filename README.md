@@ -1,137 +1,138 @@
 # Talent Brain
 
-An agent-readable career knowledge graph for Claude Code.
+Build a rich, navigable career profile that you and AI agents can both explore.
 
-Build a structured profile of your career history — experience, projects, skills, and where you're heading — that both humans and AI agents can navigate, query, and generate documents from.
+Instead of a flat resume PDF, Talent Brain creates a structured set of files capturing your real experience in depth — what you built, the decisions you made, what's still running, and where you're heading. Then use Claude to generate targeted resumes, assess your fit for a role, or walk a recruiter through your background interactively.
 
-The profile follows the [llms.txt](https://llmstxt.org/) pattern: a compact index (`RESUME.md`) with links to deep-dive files fetched on demand. Designed to survive AI screening, answer recruiter questions, and give a hiring agent more signal than any PDF.
+---
+
+## What you need
+
+- [Claude Code](https://claude.ai/code) — the Claude desktop or IDE extension
+- An empty folder (or a new GitHub repo) where your profile will live
 
 ---
 
 ## Install
 
-```bash
-npm install -g talent-brain
-```
-
-Or add to your Claude Code settings:
+Open your Claude Code settings file (`~/.claude/settings.json`) and add:
 
 ```json
 {
   "plugins": [
     {
       "name": "talent-brain",
-      "source": { "source": "npm", "package": "talent-brain" }
+      "source": { "source": "github", "repo": "jeromebanks/talent-brain" }
     }
   ]
 }
 ```
 
+Restart Claude Code. That's it.
+
 ---
 
-## Quick start
+## Set up your profile
 
-**1. Initialize a new profile**
+Navigate to your profile folder in Claude Code and run:
 
 ```
 /talent-brain:init
 ```
 
-Creates the profile directory structure and stub files. Takes ~2 minutes. You'll need: your name, current title, location, and optional contact links.
+Claude will ask for your name, current title, and location, then create the profile structure. Takes about 2 minutes.
 
-**2. Populate from existing resumes**
+---
 
+## Fill it in
+
+**From an existing resume:**
 ```
 /talent-brain:ingest resume.pdf
-/talent-brain:ingest resume-2015.pdf resume-2023.pdf linkedin-export.zip
 ```
+Accepts PDFs and LinkedIn data exports (`.zip` from LinkedIn's "Get a copy of your data"). You can run it on multiple files — older resumes often have detail that got trimmed from newer ones, and ingest takes the best from each.
 
-Handles PDFs, plain text, and LinkedIn ZIP exports. Safe to run multiple times — additive only, takes the union across all sources.
-
-**3. Deepen with a structured interview**
-
+**From memory:**
 ```
 /talent-brain:excavate
-/talent-brain:excavate gsk
 ```
+Claude interviews you about a role: what you built, what the impact was, what decisions you made. About 10 minutes per role. This is where depth that never makes it onto a resume gets captured.
 
-A conversational interview that surfaces what resumes strip out: outcomes, tradeoffs, what's still running, what got adopted. Works for new entries and for augmenting thin existing ones.
+**Your intent (fill this one manually):**
 
-**4. Fill in your intent**
-
-Open `intent.md` and fill it in manually. This is the one file no tool writes — it contains what you actually want next, which no resume can express.
+Open `intent.md` in any text editor. This is the one file Claude won't write for you — it's where you say what you actually want next, and what you're not interested in. It's also the most valuable file in the profile.
 
 ---
 
-## Skills
+## Use it
 
-| Skill | What it does |
-|---|---|
-| `/talent-brain:init` | Scaffold a new profile |
-| `/talent-brain:ingest [files]` | Populate from resume PDFs or LinkedIn export |
-| `/talent-brain:excavate [role]` | Structured interview — new entry or augment existing |
-| `/talent-brain:showcase ["context"]` | Persuasive pitch for a hiring manager, with interactive Q&A |
-| `/talent-brain:fit [jd]` | Evidence-backed fit assessment against a job description |
-| `/talent-brain:gap [jd]` | What to develop, surface, or reframe for a target role |
-| `/talent-brain:generate [jd]` | Tailored resume document from full profile depth |
-| `/talent-brain:cover-letter [jd]` | Argument-first cover letter, handles gaps honestly |
+**Am I a good fit for this role?**
+```
+/talent-brain:fit
+```
+Paste a job description when prompted. Returns an honest, evidence-backed assessment.
 
-Job descriptions can be pasted text, a file path, or a URL.
+**What's missing from my profile for this role?**
+```
+/talent-brain:gap
+```
+Separates genuine gaps from things that are probably in your history but not captured yet.
+
+**Generate a resume for a specific role:**
+```
+/talent-brain:generate
+```
+Paste a job description. Returns a tailored resume drawn from your full profile depth.
+
+**Write a cover letter:**
+```
+/talent-brain:cover-letter
+```
+Makes a specific argument for your candidacy — not a generic template.
 
 ---
 
-## Profile structure
+## Share with a recruiter or hiring manager
 
+**Claude Cowork (easiest — no install required on their end):**
+
+Open your profile folder in Claude Code and start a Cowork session. Share the link. The recruiter joins and can ask questions in plain language — Claude answers from your profile. They don't need an account or any setup.
+
+To start the showcase:
 ```
-your-profile/
-├── llms.txt              # Agent manifest — lists all files with descriptions
-├── RESUME.md             # Index — human + agent entry point (~2K tokens)
-├── SCHEMA.md             # Schema reference for agents and contributors
-├── intent.md             # What you want next (fill this manually)
-├── skills.md             # Capability taxonomy with depth + recency signals
-├── experience/
-│   └── <company>.md      # One deep-dive per employer
-├── projects/
-│   └── <project>.md      # One deep-dive per notable project
-└── extensions/           # Optional: publications, patents, speaking, certifications, press, awards, open-source
+/talent-brain:showcase
 ```
 
-The profile is plain Markdown. Host it on GitHub so agents and humans can fetch any file by URL.
+Claude opens with a pitch built around your strongest signals, then takes questions.
 
-See [SCHEMA.md](SCHEMA.md) for the full schema specification.
+**Via GitHub:**
+
+If your profile is on GitHub, anyone who opens it in Claude Code gets Talent Brain automatically — the profile carries its own plugin configuration. They run `/talent-brain:showcase` and go.
 
 ---
 
-## The showcase use case
+## FAQ
 
-Share your profile with a hiring manager or recruiter:
+**Do I need to know how to code?**
+No. If you can open a folder in Claude Code and follow prompts, you can build a profile.
 
-```
-/talent-brain:showcase "senior data infrastructure role"
-```
+**Is my profile private?**
+By default yes — it lives on your machine. You control whether to push it to GitHub and whether the repo is public or private.
 
-Opens an interactive session where they can ask any question about your background — Claude navigates the profile and answers from the evidence. More signal than a PDF in less time.
+**Can I use this with a private GitHub repo?**
+Yes. The profile works the same way whether it's local, a private repo, or a public one.
 
----
-
-## For hiring agents and recruiters
-
-The profile is designed for agent ingestion. Point any LLM at `RESUME.md` (or `llms.txt`) and it can navigate to the relevant depth. The schema is defined in `SCHEMA.md`.
-
-```
-Fetch: https://raw.githubusercontent.com/<user>/<profile>/main/llms.txt
-```
+**What about the `llms.txt` file in my profile?**
+That's for developers building hiring tools that need to read profiles programmatically. You don't need to do anything with it.
 
 ---
 
 ## Contributing
 
-This project is early. Issues and PRs welcome at [github.com/jeromebanks/talent-brain](https://github.com/jeromebanks/talent-brain).
+Issues and PRs welcome at [github.com/jeromebanks/talent-brain](https://github.com/jeromebanks/talent-brain).
 
-The schema is intentionally extensible — industries have different needs (publications, patents, portfolios). If your field needs something not covered, open an issue.
+The schema is intentionally extensible — different industries have different needs (publications, patents, portfolios). If your field needs something not covered, open an issue.
 
 ---
 
-## License
-
-MIT
+MIT License
