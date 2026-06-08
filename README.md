@@ -64,9 +64,11 @@ Accepts PDFs and LinkedIn data exports (`.zip` from LinkedIn's "Get a copy of yo
 ```
 Claude interviews you about a role: what you built, what the impact was, what decisions you made. About 10 minutes per role. This is where depth that never makes it onto a resume gets captured.
 
-**Your intent (fill this one manually):**
-
-Open `intent.md` in any text editor. This is the one file Claude won't write for you — it's where you say what you actually want next, and what you're not interested in. It's also the most valuable file in the profile.
+**Capture your intent:**
+```
+/talent-brain:intent
+```
+A short conversation about what you actually want next — and what you're not interested in. Claude writes `intent.md` from your answers. This is the most valuable file in the profile and the one no resume can express.
 
 ---
 

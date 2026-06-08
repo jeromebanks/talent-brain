@@ -297,7 +297,7 @@ Next steps:
   /talent-brain:excavate   — guided interview to capture your history from scratch
 
 Your profile is empty stubs until you run one of the above.
-Most important file to fill in manually: intent.md
+Most important next step: /talent-brain:intent — capture what you actually want next
 ```
 
 ## Important constraints

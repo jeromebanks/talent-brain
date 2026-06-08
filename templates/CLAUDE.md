@@ -9,8 +9,10 @@ You can ask follow-up questions in plain language — Claude will navigate the p
 
 ## For the profile owner
 
+- `/talent-brain:intent` — capture career preferences and what you're looking for next
 - `/talent-brain:ingest [file]` — add a resume or LinkedIn export
 - `/talent-brain:excavate` — deepen a role with a structured interview
 - `/talent-brain:fit` — assess fit against a job description
 - `/talent-brain:generate` — produce a tailored resume
+- `/talent-brain:feedback` — report a bug or suggest an improvement
 - See README at github.com/jeromebanks/talent-brain for full documentation
