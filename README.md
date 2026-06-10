@@ -19,34 +19,23 @@ A GitHub account is helpful for sharing your profile but not required to get sta
 
 ---
 
-## Install
+## Get started
 
-Open your Claude Code settings file (`~/.claude/settings.json`) and add:
+**1. Clone this repo and open it in Claude Code:**
 
-```json
-{
-  "plugins": [
-    {
-      "name": "talent-brain",
-      "source": { "source": "github", "repo": "jeromebanks/talent-brain" }
-    }
-  ]
-}
+```
+git clone https://github.com/jeromebanks/talent-brain
 ```
 
-Restart Claude Code. That's it.
+Open the `talent-brain` folder in Claude Code. The plugin loads automatically.
 
----
-
-## Set up your profile
-
-Navigate to your profile folder in Claude Code and run:
+**2. Run init:**
 
 ```
 /talent-brain:init
 ```
 
-Claude will ask for your name, current title, and location, then create the profile structure. Takes about 2 minutes.
+Claude will ask for your name, title, location, and where to create your profile folder — then scaffold it, initialize git, and optionally push it to GitHub. Takes about 2 minutes.
 
 ---
 

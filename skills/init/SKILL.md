@@ -24,13 +24,20 @@ Ask the user for the following. Ask them all at once in a single message, not on
 
 Wait for their response before proceeding.
 
-## Step 2 — Confirm the profile location
+## Step 2 — Create the profile folder
 
-Ask: "Where should I create the profile? I'll use the current directory unless you specify a path."
+Ask: "What would you like to name your profile folder? I'll create it in your home directory — or tell me a different parent path if you prefer."
 
-If the user specifies a path, use it. If not, use the current working directory.
+Suggest a sensible default based on their name, e.g. `talent-brain` or `jerome-banks-profile`.
 
-The profile directory must be empty or not yet exist. If the target directory has files in it, warn the user and ask them to confirm before proceeding.
+Once you have the name and parent (default `~/`), determine the full path and run these commands in sequence:
+
+```
+mkdir -p <full-path>
+git init <full-path>
+```
+
+All subsequent files are created inside `<full-path>`.
 
 ## Step 3 — Scaffold the profile
 
@@ -226,10 +233,10 @@ Ask: "Would you like me to create a GitHub repo for your profile now? This makes
 
 If the user declines or wants to do it later, print the manual instructions and skip to Step 6:
 ```
-To create it later:
-  git init && git add . && git commit -m "Initial Talent Brain profile"
+To create it later (from inside your profile folder):
+  git add . && git commit -m "Initial Talent Brain profile"
   gh repo create talent-brain --public --source . --remote origin --push
-  gh repo edit talent-brain --add-topic talent-brain-profile
+  gh repo edit [username]/talent-brain --add-topic talent-brain-profile
 ```
 
 If yes, ask: "Public or private?"
@@ -240,13 +247,12 @@ Then determine the repo name:
 - Default: `talent-brain`
 - If the name is already taken in their GitHub namespace (the `gh repo create` command will fail), suggest `talent-brain-profile` as the fallback, or let them choose
 
-Run these commands in sequence. Use `gh` CLI — it works on Mac, Windows, and Linux.
+Run these commands in sequence from inside `<full-path>`. Use `gh` CLI — it works on Mac, Windows, and Linux.
 
-**1. Initialize git and make the first commit:**
+**1. Make the first commit** (git is already initialized from Step 2):
 ```
-git init
-git add .
-git commit -m "Initial Talent Brain profile — [name]"
+git -C <full-path> add .
+git -C <full-path> commit -m "Initial Talent Brain profile — [name]"
 ```
 
 **2. Create the repo and push:**
@@ -257,7 +263,7 @@ If this fails because the name is already taken, retry with `talent-brain-profil
 
 **3. Add the discovery topic** (makes the profile findable at github.com/topics/talent-brain-profile):
 ```
-gh repo edit talent-brain --add-topic talent-brain-profile
+gh repo edit [username]/[reponame] --add-topic talent-brain-profile
 ```
 
 **4. Print the result:**
