@@ -1,32 +1,45 @@
 ---
 name: tb-init
-description: Initialize a new Talent Brain career profile. Run this to scaffold a new profile directory with the correct structure and stub files. Use when a user wants to create or start a new Talent Brain profile from scratch.
+description: Initialize a new Talent Brain career profile. Entry point for new profiles — works with or without an existing resume or LinkedIn export. Use when setting up a profile from scratch. For adding materials to an existing profile, use ingest instead.
 ---
 
 # Talent Brain — Init
 
-You are initializing a new Talent Brain career profile. Your job is to collect the minimum required information, scaffold the directory structure, generate the stub files, and leave the user with a clear next step.
+You are initializing a new Talent Brain career profile. Your job is to collect the minimum required information, scaffold the directory structure, generate the stub files, and get the user to a populated (or ready-to-populate) profile as fast as possible.
 
-## Step 1 — Collect required information
+## Step 1 — Determine entry path
 
-Ask the user for the following. Ask them all at once in a single message, not one by one.
+Ask the user a single question — not a form:
 
-**Required:**
-- Full name
-- Current job title (or target title if actively seeking)
-- Location (city and country/region — as specific as they're comfortable with)
+> "Do you have a resume or LinkedIn export to start from? Drop a file path, or just tell me your name to start with empty stubs."
 
-**Optional (say they can skip any of these):**
-- Email address
-- LinkedIn profile URL
-- GitHub profile URL
-- Personal website URL
+Wait for their response.
 
-Wait for their response before proceeding.
+**Path A — file provided:**
+The user gave you a file path (PDF, `.txt`, `.md`, `.zip`, or `.csv`). Extract identity fields from it before generating any files (see below). Proceed to Step 2.
+
+**Path B — name only:**
+The user gave you a name (or said skip/no). Ask nothing else. Proceed to Step 2 with only the name.
+
+### Path A: extract identity from the file
+
+Read the file and extract the following fields. Use only what is explicitly present — do not infer or invent.
+
+```
+name
+current_title
+location
+email
+linkedin_url
+github_url
+website_url
+```
+
+If the file is a LinkedIn ZIP export, read `Profile.csv` for these fields. For PDFs and text resumes, parse from the header/contact section. Store these values — they populate the RESUME.md frontmatter and llms.txt in Step 4.
 
 ## Step 2 — Determine the profile folder
 
-First, detect whether you are running inside the Talent Brain plugin repo by checking if a `skills/` directory exists in the current working directory:
+Detect whether you are running inside the Talent Brain plugin repo by checking if a `skills/` directory exists in the current working directory:
 
 ```
 ls skills/
@@ -59,18 +72,19 @@ Create the following directory structure in the target location:
 
 ## Step 4 — Generate the files
 
-Generate each file listed below. Use the exact frontmatter and section structure from the SCHEMA.md in the Talent Brain plugin. Fill in the values the user provided; leave optional fields as empty strings if not provided. Use today's date for all `updated` fields (YYYY-MM-DD format).
+Generate each file listed below. Use today's date for all `updated` fields (YYYY-MM-DD format).
+
+For **Path A**: populate frontmatter fields from the extracted identity values. Leave any fields not found in the source as empty strings.
+For **Path B**: populate `name` from what the user provided. Leave all other frontmatter fields as empty strings.
 
 ### `RESUME.md`
-
-Generate using this structure. In the identity statement line, write a generic placeholder: _"[2-sentence professional identity — what you're known for and where you're heading]"_
 
 ```markdown
 ---
 schema_version: "1.0"
 name: "[name]"
-current_title: "[title]"
-location: "[location]"
+current_title: "[title or empty]"
+location: "[location or empty]"
 email: "[email or empty]"
 linkedin: "[url or empty]"
 github: "[url or empty]"
@@ -171,8 +185,6 @@ Structure each domain as:
 
 ### `llms.txt`
 
-Generate with the name and a generic identity placeholder. Leave the Experience, Projects, and Extensions sections empty — they'll be populated as the profile is built.
-
 ```
 # [name] — Career Profile
 
@@ -194,11 +206,11 @@ Generate with the name and a generic identity placeholder. Leave the Experience,
 
 Copy the Talent Brain SCHEMA.md from the plugin into the profile root. This makes the profile self-contained — agents can read it without needing access to the plugin.
 
-To do this: read the SCHEMA.md from the plugin directory (the same directory this skill is located in, two levels up: `../../SCHEMA.md`) and write it to `<profile-root>/SCHEMA.md`.
+Read the SCHEMA.md from the plugin directory (two levels up from this skill: `../../SCHEMA.md`) and write it to `<profile-root>/SCHEMA.md`.
 
 ### `.claude/skills/`
 
-Copy all Talent Brain skills into the profile folder so they work immediately without any plugin installation — for the profile owner, recruiters who clone the repo, and Cowork sessions alike.
+Copy all Talent Brain skills into the profile folder so they work immediately without any plugin installation.
 
 If running from the plugin repo (detected in Step 2), run:
 ```
@@ -208,8 +220,6 @@ cp -rL .claude/skills <full-path>/.claude/skills
 The `-L` flag dereferences symlinks so the actual skill files are copied, not the symlink pointers.
 
 ### `.claude/settings.json`
-
-Create this file as a fallback for users who prefer the marketplace plugin install path. It does not affect the embedded skills above.
 
 ```json
 {
@@ -224,32 +234,126 @@ Create this file as a fallback for users who prefer the marketplace plugin insta
 
 ### `CLAUDE.md`
 
-Create this file at the profile root. Claude Code reads it when the folder is opened. It orients Claude on what this repo is and what commands are available.
+Generate this file verbatim — it is boilerplate and does not contain the candidate's name.
 
 ```markdown
-# [name] — Talent Brain Profile
+# Talent Brain Career Profile
 
-This is a Talent Brain career profile. The talent-brain plugin is configured in `.claude/settings.json` and should load automatically.
+This is a Talent Brain career profile, built and maintained using the [Talent Brain plugin](https://github.com/jeromebanks/talent-brain). The plugin is configured in `.claude/settings.json` and loads automatically when this folder is opened in Claude Code. Skills are also copied into `.claude/skills/` and work without any plugin install.
+
+## Profile structure
+
+- **`RESUME.md`** — the career index. Start here. Links out to detail files.
+- **`intent.md`** — career preferences, what the candidate is looking for, what they're not.
+- **`skills.md`** — capability taxonomy with depth and recency signals.
+- **`llms.txt`** — machine-readable manifest of all profile files.
+- **`experience/<company>.md`** — one file per employer, with context, contributions, outcomes, tools.
+- **`projects/<name>.md`** — one file per notable project or open-source contribution.
+- **`extensions/`** — publications, certifications, speaking engagements (if present).
+
+Always start with `RESUME.md`. Fetch detail files on demand — do not pre-load everything.
+
+## Available skills
+
+### For hiring managers and recruiters
+
+| Command | What it does |
+|---|---|
+| `/talent-brain:showcase` | Interactive presentation of the candidate's background, then open Q&A. |
+
+### For profile owners
+
+| Command | What it does |
+|---|---|
+| `/talent-brain:ingest [file]` | Add career history from a resume PDF or LinkedIn export. Additive only — never overwrites existing content. |
+| `/talent-brain:excavate` | Structured interview to deepen a specific role or project. Use when a file has `<!-- not yet captured -->` sections. |
+| `/talent-brain:intent` | Guided conversation to capture career goals and preferences, then writes `intent.md`. |
+| `/talent-brain:generate [jd]` | Generate a tailored resume for a job description, or a general-purpose resume. |
+| `/talent-brain:fit [jd]` | Structured fit analysis against a job description — what matches, what doesn't, what's missing. |
+| `/talent-brain:gap [jd]` | Identify gaps between the profile and a target role: hard gaps, profile gaps, framing gaps. |
+| `/talent-brain:cover-letter [jd]` | Draft a cover letter grounded in the actual profile. |
+
+## Common tasks
+
+- "Tell me about this candidate" → `/talent-brain:showcase`
+- "Add a new job" → `/talent-brain:ingest [file]` or `/talent-brain:excavate`
+- "Print a resume for this posting" → `/talent-brain:generate [jd]`
+- "How do I fit this role?" → `/talent-brain:fit [jd]`
+- "What am I missing for this role?" → `/talent-brain:gap [jd]`
+- "Write a cover letter" → `/talent-brain:cover-letter [jd]`
+- "Update what I'm looking for" → `/talent-brain:intent`
+- "Add depth to a specific role" → `/talent-brain:excavate`
+
+## Agent orientation
+
+1. Read `RESUME.md` first to orient before responding to any request.
+2. `intent.md` must never be auto-populated from a resume or inferred goals — it comes from the owner directly via `/talent-brain:intent`.
+3. Files with `<!-- not yet captured -->` are real but empty stubs — suggest `/talent-brain:excavate` to fill them.
+4. The `skills.md` "Ingested (needs review)" section contains raw skills needing depth and recency signals added before they're useful.
+
+## Plugin source
+
+- Plugin: [github.com/jeromebanks/talent-brain](https://github.com/jeromebanks/talent-brain)
+- Schema reference: `SCHEMA.md` in this folder
+```
+
+### `README.md`
+
+Generate this file with the candidate's name and identity populated. The structure is the same for everyone.
+
+```markdown
+# [name]
+
+[2-sentence professional identity from RESUME.md — what they're known for and where they're heading. For Path B with no resume, use a single placeholder line: "_Profile in progress._"]
+
+---
 
 ## For hiring managers and recruiters
 
-Run `/talent-brain:showcase` to get an interactive presentation of this candidate's background.
-You can ask follow-up questions in plain language — Claude will navigate the profile and answer.
+Open this folder in [Claude Code](https://claude.ai/code) and run:
 
-## For the profile owner
-
-- `/talent-brain:ingest [file]` — add a resume or LinkedIn export
-- `/talent-brain:excavate` — deepen a role with a structured interview
-- `/talent-brain:fit` — assess fit against a job description
-- `/talent-brain:generate` — produce a tailored resume
-- See README at github.com/jeromebanks/talent-brain for full documentation
+```
+/talent-brain:showcase
 ```
 
-## Step 5 — Create GitHub repo (optional)
+You'll get an interactive presentation of [name]'s background, followed by Q&A. Ask about specific roles, technical decisions, leadership style, or fit for a particular problem. No setup required — the plugin loads automatically.
+
+---
+
+## For [name]
+
+| What you want to do | Command |
+|---|---|
+| Add a new resume or job | `/talent-brain:ingest [file]` |
+| Deepen a role with a structured interview | `/talent-brain:excavate` |
+| Update career goals and preferences | `/talent-brain:intent` |
+| Generate a resume for a job posting | `/talent-brain:generate [jd]` |
+| Check fit against a role | `/talent-brain:fit [jd]` |
+| Find gaps for a target role | `/talent-brain:gap [jd]` |
+| Draft a cover letter | `/talent-brain:cover-letter [jd]` |
+
+---
+
+Built with [Talent Brain](https://github.com/jeromebanks/talent-brain).
+```
+
+## Step 5 — Ingest (Path A only)
+
+If the user provided a file in Step 1, run the ingest skill on that file now.
+
+Follow the full `/talent-brain:ingest` flow with the provided file. The profile was just created in Step 4, so the Phase 2 "no profile exists" check is satisfied. All other ingest phases (extract, plan, confirm, write, update skills.md, update RESUME.md, update llms.txt, report) run normally.
+
+The confirmation prompt in ingest Phase 3 ("Proceed?") is intentional — keep it. It shows the user what was parsed before writing, which is useful even on first run.
+
+Do **not** touch `intent.md` during ingest. This is a hard invariant — career intent cannot be extracted from resume sources.
+
+After ingest completes, continue to Step 6.
+
+## Step 6 — Create GitHub repo (optional)
 
 Ask: "Would you like me to create a GitHub repo for your profile now? This makes it easy to share with recruiters and run Cowork sessions."
 
-If the user declines or wants to do it later, print the manual instructions and skip to Step 6:
+If the user declines or wants to do it later, print the manual instructions and skip to Step 7:
 ```
 To create it later (from inside your profile folder):
   git add . && git commit -m "Initial Talent Brain profile"
@@ -265,9 +369,9 @@ Then determine the repo name:
 - Default: `talent-brain`
 - If the name is already taken in their GitHub namespace (the `gh repo create` command will fail), suggest `talent-brain-profile` as the fallback, or let them choose
 
-Run these commands in sequence from inside `<full-path>`. Use `gh` CLI — it works on Mac, Windows, and Linux.
+Run these commands in sequence from inside `<full-path>`.
 
-**1. Make the first commit** (git is already initialized from Step 2):
+**1. Make the first commit** — this runs after any ingest in Step 5, so it captures everything:
 ```
 git -C <full-path> add .
 git -C <full-path> commit -m "Initial Talent Brain profile — [name]"
@@ -279,7 +383,7 @@ gh repo create talent-brain --[public|private] --description "Talent Brain caree
 ```
 If this fails because the name is already taken, retry with `talent-brain-profile` or the name the user chose.
 
-**3. Add the discovery topic** (makes the profile findable at github.com/topics/talent-brain-profile):
+**3. Add the discovery topic:**
 ```
 gh repo edit [username]/[reponame] --add-topic talent-brain-profile
 ```
@@ -295,15 +399,31 @@ To share with a recruiter or hiring manager:
            the plugin loads automatically and they can run /talent-brain:showcase.
 ```
 
-## Step 6 — Confirm and orient
+## Step 7 — Confirm and orient
 
-Print a final summary:
+**Path A (bootstrapped from a file):**
+```
+✓ Talent Brain profile initialized and bootstrapped at [path]
+  README.md generated — run /talent-brain:showcase later to upgrade it with a full narrative
 
+[Ingest summary from Step 5]
+
+Not populated:
+  intent.md    ← fill this manually — what you want next
+
+Next steps:
+  /talent-brain:intent        — capture what you actually want next (most important)
+  /talent-brain:excavate      — deepen any role with a structured interview
+  /talent-brain:ingest [file] — add another resume or LinkedIn export
+```
+
+**Path B (stubs only):**
 ```
 ✓ Talent Brain profile initialized at [path]
 
 Files created:
   RESUME.md                ← your career index
+  README.md                ← profile landing page for visitors
   intent.md                ← fill this in manually — what you want next
   skills.md                ← capability taxonomy
   llms.txt                 ← agent manifest
@@ -316,17 +436,16 @@ Directories created:
   projects/       ← one file per notable project
   extensions/     ← optional: publications, speaking, certifications, etc.
 
-Next steps:
-  /talent-brain:ingest     — populate from an existing resume PDF or LinkedIn export
-  /talent-brain:excavate   — guided interview to capture your history from scratch
+Your profile is empty stubs. Next steps:
+  /talent-brain:ingest [file] — populate from an existing resume PDF or LinkedIn export
+  /talent-brain:excavate      — guided interview to capture your history from scratch
 
-Your profile is empty stubs until you run one of the above.
-Most important next step: /talent-brain:intent — capture what you actually want next
+Most important: /talent-brain:intent — capture what you actually want next
 ```
 
 ## Important constraints
 
-- Do not populate any section content. Stub files only — the user will populate them via ingest or excavate.
-- Do not invent or assume any career history, skills, or preferences.
-- If the user asks you to "just fill something in," decline politely and direct them to `/talent-brain:ingest` or `/talent-brain:excavate`.
-- `intent.md` is not generated from any materials — it must come from the user directly. Flag this explicitly.
+- **`intent.md` is never populated from any source** — this applies to both paths. Career intent must come from the user directly via `/talent-brain:intent`.
+- **Path B is stubs-only.** Do not populate any section content. Do not invent or assume career history, skills, or preferences.
+- **Path A delegates to ingest.** Ingest's own invariants apply — additive only, never overwrite content, source fidelity.
+- If the user asks you to "just fill something in" on Path B, decline politely and direct them to `/talent-brain:ingest` or `/talent-brain:excavate`.
