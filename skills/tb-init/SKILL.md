@@ -1,5 +1,5 @@
 ---
-name: init
+name: tb-init
 description: Initialize a new Talent Brain career profile. Run this to scaffold a new profile directory with the correct structure and stub files. Use when a user wants to create or start a new Talent Brain profile from scratch.
 ---
 
