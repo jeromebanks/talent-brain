@@ -325,8 +325,6 @@ Or just ask questions directly — Claude will navigate the profile and answer:
 - "Have they led or mentored engineers?"
 - "How do they compare to what we need for [describe the problem]?"
 
-> **Want a richer version of this README?** The profile owner can run `/talent-brain:publish` to generate a narrative introduction built from the full profile.
-
 ---
 
 ## For [name]
