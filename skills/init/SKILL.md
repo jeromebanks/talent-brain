@@ -24,18 +24,25 @@ Ask the user for the following. Ask them all at once in a single message, not on
 
 Wait for their response before proceeding.
 
-## Step 2 — Create the profile folder
+## Step 2 — Determine the profile folder
 
-Ask: "What would you like to name your profile folder? I'll create it in your home directory — or tell me a different parent path if you prefer."
+First, detect whether you are running inside the Talent Brain plugin repo by checking if a `skills/` directory exists in the current working directory:
 
-Suggest a sensible default based on their name, e.g. `talent-brain` or `jerome-banks-profile`.
+```
+ls skills/
+```
 
-Once you have the name and parent (default `~/`), determine the full path and run these commands in sequence:
-
+**If `skills/` exists (plugin repo context):**
+Do not ask. Tell the user: "I can see you're running this from the plugin repo — I'll create your profile at `~/talent-brain-profile` to keep things separate."
+Set `<full-path>` to `~/talent-brain-profile` (expand to the actual home directory path).
+Then run:
 ```
 mkdir -p <full-path>
 git init <full-path>
 ```
+
+**If `skills/` does not exist (blank or cloned template):**
+Scaffold in place — the current directory is the profile. Set `<full-path>` to the current working directory. Do not run mkdir or git init (already done by the clone).
 
 All subsequent files are created inside `<full-path>`.
 
@@ -189,9 +196,20 @@ Copy the Talent Brain SCHEMA.md from the plugin into the profile root. This make
 
 To do this: read the SCHEMA.md from the plugin directory (the same directory this skill is located in, two levels up: `../../SCHEMA.md`) and write it to `<profile-root>/SCHEMA.md`.
 
+### `.claude/skills/`
+
+Copy all Talent Brain skills into the profile folder so they work immediately without any plugin installation — for the profile owner, recruiters who clone the repo, and Cowork sessions alike.
+
+If running from the plugin repo (detected in Step 2), run:
+```
+cp -rL .claude/skills <full-path>/.claude/skills
+```
+
+The `-L` flag dereferences symlinks so the actual skill files are copied, not the symlink pointers.
+
 ### `.claude/settings.json`
 
-Create this file so the plugin loads automatically when anyone opens this profile folder in Claude Code — including recruiters who clone the repo. No manual plugin install needed on their end.
+Create this file as a fallback for users who prefer the marketplace plugin install path. It does not affect the embedded skills above.
 
 ```json
 {

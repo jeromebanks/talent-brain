@@ -15,3 +15,9 @@ Check whether `RESUME.md` exists in the current directory.
 ## For contributors and maintainers
 
 Skills are in `skills/<name>/SKILL.md`. Schema is in `SCHEMA.md`. Profile templates are in `templates/`.
+
+`.claude/skills/` contains symlinks to `../../skills/<name>` so skills auto-load when this repo is opened in Claude Code without a plugin install. When adding a new skill, also add the symlink:
+
+```
+ln -sf "../../skills/<name>" .claude/skills/<name>
+```

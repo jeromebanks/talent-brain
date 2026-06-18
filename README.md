@@ -27,7 +27,7 @@ A GitHub account is helpful for sharing your profile but not required to get sta
 git clone https://github.com/jeromebanks/talent-brain
 ```
 
-Open the `talent-brain` folder in Claude Code. The plugin loads automatically.
+Open the `talent-brain` folder in Claude Code. All skills load automatically — no plugin installation needed.
 
 **2. Run init:**
 
@@ -35,7 +35,11 @@ Open the `talent-brain` folder in Claude Code. The plugin loads automatically.
 /talent-brain:init
 ```
 
-Claude will ask for your name, title, location, and where to create your profile folder — then scaffold it, initialize git, and optionally push it to GitHub. Takes about 2 minutes.
+Claude will ask for your name, title, and location, then create your profile at `~/talent-brain-profile`, initialize git, and optionally push it to GitHub. Takes about 2 minutes.
+
+**3. Open your profile folder:**
+
+Open `~/talent-brain-profile` in Claude Code (or Cowork). All Talent Brain skills are available there — your profile is self-contained.
 
 ---
 
