@@ -211,16 +211,25 @@ When multiple sources both contain content for the same role:
 
 If skills were extracted from any source:
 1. Read the existing `skills.md`
-2. Identify skills not yet present in any form
-3. Append a section for ingested skills that need review:
+2. Identify skills not yet present in any form (check all sections)
+3. For each new skill, determine which section it belongs to based on the skills.md structure (Languages, Big Data, Streaming & Messaging, Cloud Platforms, DevOps, etc.)
+4. Add new skills into the appropriate existing section rather than a catch-all "Ingested" pile. Format each entry with:
+   - Depth signal inferred from the source (expert if used heavily in multiple roles, proficient if used in a project, familiar if listed but not featured)
+   - Recency signal inferred from the role dates (active if within last 2 years, recent if within 5 years, historical if older)
+   - 1–2 sentences on what they did with it, drawn directly from the source
+   - `_Used at:_` links to the experience files where it appears
+   - `_Reference:_` link to the official/canonical page for the technology (use well-known URLs only — apache.org, cloud.google.com, etc.; omit if unsure)
+
+If `skills.md` has no sections yet (stubs only), append a `## Ingested (needs review)` section grouped by domain with the same format, so the owner can rename and reorganize:
 
 ```markdown
-## Ingested (needs review)
-<!-- Skills extracted from resume sources. Add depth/recency signals and move to the right domain section. Remove this section when done. -->
+## Ingested — [Domain] (needs review)
+<!-- Move these into the right section once you're happy with the depth/recency signals. -->
 
-**[Skill]** — ? — ?
-
-**[Skill]** — ? — ?
+**[Skill]** — expert|proficient|familiar — active|recent|historical
+[1–2 sentences from source]
+_Used at:_ [Company](../experience/slug.md)
+_Reference:_ [Name](url)
 ```
 
 Do NOT modify any existing skill entries. Do NOT add skills already present elsewhere in the file.
