@@ -316,7 +316,16 @@ Open this folder in [Claude Code](https://claude.ai/code) and run:
 /talent-brain:showcase
 ```
 
-You'll get an interactive presentation of [name]'s background, followed by Q&A. Ask about specific roles, technical decisions, leadership style, or fit for a particular problem. No setup required — the plugin loads automatically.
+You'll get an interactive presentation of [name]'s background, followed by Q&A. No setup required — the plugin loads automatically.
+
+Or just ask questions directly — Claude will navigate the profile and answer:
+
+- "What has [name] built that's most relevant to a [role] at a [type of company]?"
+- "Walk me through their most complex project."
+- "Have they led or mentored engineers?"
+- "How do they compare to what we need for [describe the problem]?"
+
+> **Want a richer version of this README?** The profile owner can run `/talent-brain:publish` to generate a narrative introduction built from the full profile.
 
 ---
 
@@ -331,6 +340,7 @@ You'll get an interactive presentation of [name]'s background, followed by Q&A. 
 | Check fit against a role | `/talent-brain:fit [jd]` |
 | Find gaps for a target role | `/talent-brain:gap [jd]` |
 | Draft a cover letter | `/talent-brain:cover-letter [jd]` |
+| Publish updates to the repo | `/talent-brain:publish` |
 
 ---
 
