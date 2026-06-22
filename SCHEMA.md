@@ -65,6 +65,8 @@ If you are a human forking this schema: this document defines every file, every 
 - Files with frontmatter but minimal or no body (stubs)
 - Varying depth across experience and project files
 - Missing optional frontmatter fields
+- Old-format Contributions (flat bullet list instead of named sub-sections) — read as `what` content without structured fields
+- Outcomes, Decisions & Tradeoffs, Tools & Methods, Team & Scope sections in older files — read as supporting context; these sections are no longer written by skills
 
 ---
 
@@ -146,10 +148,13 @@ schema_version: "1.0"          # required*
 name: ""                        # required* — full name
 current_title: ""               # required* — current role title or target title if seeking
 location: ""                    # required* — city, region/country; be as specific as comfortable
-email: ""                       # optional
+emails:                         # optional — list; first entry is primary (shown on resume)
+  - ""
 linkedin: ""                    # optional — full URL
 github: ""                      # optional — full URL
-website: ""                     # optional
+websites:                       # optional — list of {url, label} pairs; label annotates the link
+  - url: ""
+    label: ""                   # e.g. "blog", "portfolio", "talent-brain profile", "company"
 updated: ""                     # required* — YYYY-MM-DD
 ---
 ```
@@ -310,28 +315,30 @@ employment_type: ""    # optional — full-time / contract / advisory / board
 
 ## Context
 [What the company was/is. What you joined to do. What the team or product landscape
-looked like when you arrived. 3–5 sentences.]
+looked like when you arrived. Team size, reporting structure, and scope of responsibility
+woven in here — not a separate section. 3–5 sentences.]
+
+## Responsibilities
+[Optional. Ongoing operational work that doesn't fit as a discrete initiative:
+on-call rotations, production ownership, continuous improvement mandates, account portfolios.
+Each as a named sub-section:]
+
+### [Responsibility name]
+- scope: [scale signal — data volume, team size, system scope, account value, patient load, etc.]
 
 ## Contributions
-[What you built, led, or changed. Be specific — name systems, teams, products.
-Use multiple sub-sections if the role spanned multiple areas.]
+[Discrete initiatives, projects, and deliverables. Each named initiative as a sub-section.
+For consulting/contract roles with multiple clients, use H3 client sections and H4 initiative atoms.]
 
-## Outcomes
-[Impact. Numbers where possible: users, data volume, revenue, team growth, latency,
-cost reduction. What's still running. What others built on top of your work.]
-
-## Decisions & Tradeoffs
-[Where you had real agency. What you chose, what you explicitly chose not to do, and why.
-This is where judgment is visible.]
-
-## Tools & Methods
-[Technologies, frameworks, methodologies used in this role. Not a comprehensive list —
-what was central to the work.]
-
-## Team & Scope
-[Team size, reporting structure, scope of responsibility. Who you worked with, hired,
-mentored, or collaborated with externally.]
+### [Initiative name or descriptive label]
+- what: [activity phrase — what you did or built, in plain language]
+- stack: [technologies, frameworks, tools, methods central to this work]
+- impact: [business value, actual or predicted; "shipped and in production" is valid;
+           or <!-- not yet captured -->]
 ```
+
+**Decisions & Tradeoffs:** Not captured in experience files. Lives in `behavioural/` (future extension)
+for interview prep and system design depth. Does not belong in the resume knowledge graph.
 
 ---
 

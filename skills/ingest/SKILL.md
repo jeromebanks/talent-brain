@@ -157,26 +157,23 @@ ingested_sources:
 
 ## Contributions
 
-[extracted descriptions, formatted as prose or bullets, or <!-- not yet captured -->]
+[For each named initiative extracted from the source:]
 
-## Outcomes
-
-<!-- not yet captured -->
-
-## Decisions & Tradeoffs
-
-<!-- not yet captured -->
-
-## Tools & Methods
-
-[extracted technologies as a list, or <!-- not yet captured -->]
-
-## Team & Scope
-
-<!-- not yet captured -->
+### [Initiative name or descriptive label]
+- what: [activity phrase — what was done or built, without technology names]
+- stack: [technologies, frameworks, tools mentioned for this initiative]
+- impact: [if the source states an outcome or metric, capture it; otherwise <!-- not yet captured -->]
 ```
 
-**Important:** Do not invent content for Outcomes, Decisions & Tradeoffs, or Team & Scope — these require the person's own recollection, not resume text. Mark them `<!-- not yet captured -->`.
+**Extraction rules for Contributions:**
+- Each `**Name** – description` bullet in the source becomes a `### Name` sub-section
+- `what`: the activity phrase, stripping technology names (those go in `stack`)
+- `stack`: combine tech names from the bullet with any Tools & Methods list in the source
+- `impact`: only write if the source explicitly states a result or metric; never infer or estimate
+- For bullets without a bold name: create a short descriptive label from the activity
+- If the role has no distinct initiatives (e.g., a short early-career role): use `<!-- not yet captured -->` and let `/excavate` fill in structure
+
+**Important:** Do not write Decisions & Tradeoffs to experience files — that section is deferred to a future `behavioural/` extension.
 
 ### CREATE: new project file
 

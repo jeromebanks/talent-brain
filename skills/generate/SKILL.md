@@ -64,11 +64,12 @@ Group by domain. Keep depth signals (`expert`, `proficient`) if the format allow
 
 For each role:
 1. Read the full `experience/<slug>.md` — do not rely on the RESUME.md summary alone
-2. Write 3–5 bullet points that lead with outcomes, not activities
-3. For targeted resumes: surface the bullets most relevant to the JD first; deprioritize or omit bullets that don't speak to the target role
-4. Every bullet should follow: **result or outcome** → what you did → at what scale
-5. Use numbers wherever they exist in the profile. Do not invent metrics.
-6. Use active verbs: built, designed, led, reduced, shipped, established — not "responsible for" or "helped with"
+2. For each `### Initiative` sub-section in Contributions, generate one resume bullet
+3. For targeted resumes: select the most relevant initiatives first; omit or compress less relevant ones
+4. Each bullet is synthesized from the atom fields: lead with `impact` if present, then `what`, with `stack` woven in naturally. The LLM picks the right verb from the nature of the work — do not force "developed" or any single verb
+5. Use numbers wherever `impact` contains them. Do not invent metrics.
+6. For `Responsibilities` sub-sections: generate a brief bullet describing the ongoing operational scope
+7. If `impact` is `<!-- not yet captured -->`: generate from `what` and `stack` alone — omit "improved X" framing since you have no number to back it
 
 For roles more than 15 years old: 2–3 bullets maximum, summary-level only, unless the role has specific high-relevance to the target.
 

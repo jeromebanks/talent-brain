@@ -77,24 +77,22 @@ Use these as a guide, not a script. Adapt the wording to what the person has alr
 - "Walk me through the most important thing you shipped."
 - "What would have been different if you'd never joined?"
 
-**Outcomes** ← most often missing from resumes; probe hard
+**Impact (per initiative)** ← most often missing from resumes; probe hard for each named contribution
+- "What's the impact of [initiative name]? Is there a number attached — users, data volume, latency, cost?"
 - "What's still running today from that work?"
 - "What did others build on top of what you created?"
-- "Can you put numbers on it — users, data volume, latency improvement, team size, revenue?"
-- "Who adopted it? Inside the company, or externally?"
+- "Who adopted it — inside the company, or externally?"
+- "What would have broken or been harder if you hadn't built it?"
 
-**Decisions & Tradeoffs** ← resumes almost never capture this
-- "Where did you have real decision-making authority — not just implementing someone else's plan?"
-- "What did you choose *not* to do, and why? What did you push back on?"
-- "What's a call you made that you're still confident was right?"
-- "What would you do differently?"
-
-**Tools & Methods** (usually easy; keep it brief)
-- "What was the core stack? What was central vs. incidental?"
-
-**Team & Scope**
+**Context (team and scope)** ← absorbed into the Context section, not a separate section
 - "How big was your team? What was your scope of responsibility?"
-- "Did you hire or grow the team? Mentor anyone who went on to do notable things?"
+- "Who did you work with — other engineers, PMs, data scientists, external partners?"
+- "Did you hire or mentor anyone who went on to do notable things?"
+
+**Responsibilities** ← ongoing work that isn't a discrete project
+- "Beyond the named projects, what were you responsible for on an ongoing basis?"
+- "Were you on call? What were you paged for?"
+- "Was there a continuous improvement mandate — keeping things fast, reliable, cheap?"
 
 **Through-Line** (for projects especially)
 - "How does this connect to your broader work or the way you approach problems?"
@@ -116,7 +114,7 @@ Use these as a guide, not a script. Adapt the wording to what the person has alr
 
 ### Pacing
 
-After roughly every 3 exchanges, briefly note where you are: "Good — I have what I need for Contributions and Outcomes. Two more areas: the decisions you made, and team scope."
+After roughly every 3 exchanges, briefly note where you are: "Good — I have what I need for the context and the main contributions. Let me ask about impact and any ongoing responsibilities."
 
 This keeps the user oriented without making it feel like a checklist.
 
@@ -128,19 +126,23 @@ When the interview is complete (either you've covered the material or the user s
 
 Tell the user: "Let me draft the updated content. I'll show you what I'm planning to write before touching the file."
 
-Write proposed content for each section that was a gap or thin. For thin sections, write a replacement that incorporates both what was there and what was said in the interview. Show the proposals:
+Write proposed content for each section that was a gap or thin. For Contributions, write named sub-sections using the atom structure. Show the proposals:
 
 ```
 Here's what I'm planning to write:
 
+**Context:**
+[proposed prose — includes team size, scope, situation when they joined]
+
+**Responsibilities:**
+### [Name]
+- scope: [scale signal]
+
 **Contributions:**
-[proposed prose]
-
-**Outcomes:**
-[proposed prose]
-
-**Decisions & Tradeoffs:**
-[proposed prose]
+### [Initiative name]
+- what: [activity phrase]
+- stack: [technologies]
+- impact: [business value or <!-- not yet captured -->]
 
 Does this look right? I can adjust anything before writing.
 ```
@@ -149,13 +151,13 @@ Wait for approval or edits before writing to disk.
 
 ### Writing rules
 
-- **Write in first person** — this is the person's voice, not a profile about them. "I designed..." not "Jerome designed..."
 - **Be specific** — numbers, names of systems, names of technologies, names of outcomes. Vague summaries are worse than nothing.
-- **Active voice** — "built," "designed," "led," not "was responsible for"
-- **Don't over-polish** — the goal is accurate and specific, not impressive-sounding. Hype that isn't backed by specifics will undermine trust in the profile.
-- **For thin sections** — write a replacement incorporating what was there and what the interview added. Mark clearly what came from the interview vs. what was already present if the user wants to review the merge.
-- **For gap sections** — write from scratch based on the interview.
-- **Never write** Outcomes, Decisions & Tradeoffs, or Through-Line based on resume bullet points alone — these require the person's own account. If the interview didn't cover them, leave as `<!-- not yet captured -->`.
+- **For Contributions** — write each initiative as a named sub-section with `what`, `stack`, and `impact`. The `what` is a plain-language activity phrase (no tech names — those go in `stack`). The `impact` is what mattered: a metric, an adoption story, or "shipped and in production" if that's all there is. If the interview didn't surface impact for a contribution, leave it `<!-- not yet captured -->`.
+- **For Context** — prose, 3–5 sentences. Weave in team size, scope, and the situation when they arrived. Do not create a separate Team & Scope section.
+- **For Responsibilities** — only if the interview surfaced ongoing operational work that isn't a discrete initiative. Named sub-section with a `scope` field.
+- **Don't over-polish** — the goal is accurate and specific, not impressive-sounding.
+- **For thin sections** — write a replacement incorporating what was there and what the interview added.
+- **Never write** Decisions & Tradeoffs to experience files — if the interview surfaces good decisions, note them and suggest: "That sounds like a behavioural story worth capturing — we'll have a place for it soon."
 
 ### After writing
 

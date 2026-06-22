@@ -16,20 +16,5 @@ employment_type: "full-time"
 
 ## Contributions
 
-<!-- not yet captured -->
+<!-- not yet captured — use /talent-brain:excavate to add initiatives -->
 
-## Outcomes
-
-<!-- not yet captured -->
-
-## Decisions & Tradeoffs
-
-<!-- not yet captured -->
-
-## Tools & Methods
-
-<!-- not yet captured -->
-
-## Team & Scope
-
-<!-- not yet captured -->
