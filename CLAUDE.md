@@ -12,6 +12,10 @@ Check whether `RESUME.md` exists in the current directory.
 
 - If it **does** exist: this is a profile folder that happens to have the plugin checked out nearby. Orient normally.
 
+## Google Drive access
+
+Use the `gws` skill (`/talent-brain:gws`) to list and download files from Google Drive. Do **not** use the MCP Google Drive connectors (`mcp__claude_ai_Google_Drive__*`) — they read file content into the conversation context and burn tokens rapidly. The `gws` CLI writes files directly to disk using `--output`, so file content never enters context.
+
 ## For contributors and maintainers
 
 Skills are in `skills/<name>/SKILL.md`. Schema is in `SCHEMA.md`. Profile templates are in `templates/`.
