@@ -39,7 +39,7 @@ If the user wants to fill gaps first, stop here and remind them to run this skil
 
 Read the full profile: `RESUME.md`, all `experience/` files, all `projects/` files, `skills.md`, and `intent.md`.
 
-Generate a complete, well-formatted general-purpose resume in Markdown. Follow the same approach as `/talent-brain:generate` with no job description — optimized for broad appeal, not a specific role.
+Generate a complete, well-formatted general-purpose resume in Markdown. Follow the same approach as `/talent-brain:generate` with no job description — optimized for broad appeal, not a specific role. From `intent.md`, only "Most Important Factors," "What I'm Not Interested In," and "Where I'm Going" are resume material — never pull "Reasons for the Move," "Availability & Job Search Activity," or "Work Authorization" into the generated resume.
 
 Format:
 ```markdown
@@ -180,3 +180,4 @@ If git push fails (no remote, not initialized), print the manual steps and skip 
 - `resume.md` is always the current general-purpose resume; overwriting it is safe
 - README.md narrative is generated from the profile as it exists now — do not invent signals not present in the files
 - The "strongest signals" must be specific and evidenced — no generic claims
+- Never pull `intent.md`'s "Reasons for the Move," "Availability & Job Search Activity," or "Work Authorization" into `resume.md` or README.md — neither document is the place for them, regardless of source

@@ -62,7 +62,7 @@ Pick the single most compelling piece of evidence in the profile. Describe it sp
 Two more concrete signals. Keep them tighter — one or two sentences each.
 
 **Paragraph 4 — Current positioning and context fit**
-What is this person looking for (from `intent.md`)? How does that connect to this role or context, if one was provided? Be honest about fit — if `intent.md` signals they're not interested in something central to this role, say so. A good showcase builds trust; overselling wastes everyone's time.
+What is this person looking for (from `intent.md`'s "Most Important Factors" and "Where I'm Going")? How does that connect to this role or context, if one was provided? Be honest about fit — if `intent.md` signals they're not interested in something central to this role, say so. A good showcase builds trust; overselling wastes everyone's time. Don't volunteer "Reasons for the Move," availability, or work authorization unprompted here — those are answered if asked (see Q&A section below), not part of the proactive pitch.
 
 Close with 2–3 specific conversation starters — areas in the profile where a deeper conversation would be most revealing. These should not be softballs. They should be the questions a sharp hiring manager would want to ask.
 
@@ -90,7 +90,10 @@ For each question from the hiring manager:
 Navigate to relevant experience/skills content. Summarize what's there with depth indicators and recency. If it's historical, say so.
 
 **"Why are they leaving / looking?"**
-Read `intent.md`. Present what the candidate has written about their direction and motivation. Do not speculate beyond it. If `intent.md` is sparse, say: "They haven't captured their full reasoning in the profile yet — that's a conversation question."
+Read the "Reasons for the Move" section of `intent.md`. Present exactly what's written there — it's already been framed carefully by the candidate — and do not speculate, elaborate, or add color beyond it. If it's sparse, say: "They haven't captured their full reasoning in the profile yet — that's a conversation question."
+
+**"What's their availability / timeline / notice period?" or "Do they need visa sponsorship?"**
+Read "Availability & Job Search Activity" or "Work Authorization" in `intent.md` and answer directly and factually. These sections exist for exactly this kind of direct question — answer plainly, don't hedge.
 
 **"Have they done [specific thing]?"**
 Check the profile. Yes with evidence, no with honesty, or "not explicitly captured" with a note.
@@ -131,7 +134,7 @@ STRONGEST SIGNALS
 3. [Signal — 3–4 sentences]
 
 WHAT THEY'RE LOOKING FOR
-[Summary from intent.md — 2–3 sentences]
+[Summary from intent.md's "Most Important Factors" and "Where I'm Going" — 2–3 sentences. Not "Reasons for the Move," availability, or work authorization — this is a shareable document, same rule as the resume.]
 
 HONEST CAVEATS
 [1–2 areas where a skeptical hiring manager should probe]

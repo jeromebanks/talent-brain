@@ -19,7 +19,7 @@ If a JD is provided as a file path or URL, read/fetch it first.
 
 Read all of the following before generating anything:
 1. `RESUME.md` — index, summary, experience list
-2. `intent.md` — direction and preferences (informs the summary and objective)
+2. `intent.md` — direction and preferences (informs the summary and objective). Only "Most Important Factors," "What I'm Not Interested In," and "Where I'm Going" are resume material — never pull from "Reasons for the Move," "Availability & Job Search Activity," or "Work Authorization" into resume text. Those sections don't belong on a resume regardless of source.
 3. `skills.md` — full capability taxonomy
 4. **All** `experience/*.md` files — you need the depth, not just summaries
 5. **All** `projects/*.md` files — select the most relevant

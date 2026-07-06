@@ -144,11 +144,15 @@ visibility: "public"
 
 # Career Intent & Preferences
 
-## What I'm Looking For
+## Most Important Factors
 
 <!-- not yet captured -->
 
 ## What I'm Not Interested In
+
+<!-- not yet captured -->
+
+## Reasons for the Move
 
 <!-- not yet captured -->
 
@@ -160,7 +164,11 @@ visibility: "public"
 
 <!-- not yet captured -->
 
-## Availability
+## Availability & Job Search Activity
+
+<!-- not yet captured -->
+
+## Work Authorization
 
 <!-- not yet captured -->
 ```

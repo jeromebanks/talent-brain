@@ -214,7 +214,7 @@ Lead with scale and impact. Link to deep-dive file.]
 
 ### `intent.md`
 
-The differentiating layer. Expresses preference and direction, not just capability history.
+The differentiating layer. Expresses preference and direction, not just capability history. Structured to answer the same questions a recruiter intake form asks — ranked priorities, reasons for the move, quantified job-search activity, timing, work authorization — because those are the fields that actually get used to triage a candidate. Written by `/talent-brain:intent` only; see that skill for the interview design and the "not a counseling session" invariant.
 
 **Frontmatter:**
 ```yaml
@@ -228,12 +228,17 @@ visibility: "public" # optional — public / private / unlisted (for future priv
 ```markdown
 # Career Intent & Preferences
 
-## What I'm Looking For
-[Role types, domains, problem spaces. Describe what a good next role looks like.]
+## Most Important Factors
+[Ranked list of what matters most in a next role — comp, domain, stage, team, scope,
+remote/hybrid, mission — followed by qualitative color on the top 1-2.]
 
 ## What I'm Not Interested In
 [Explicit disinterest signals. Types of work, structures, environments, domains to avoid.
 Being specific here saves everyone time.]
+
+## Reasons for the Move
+[1-2 sentences on what's driving the move. Forward-framed; never an unprovable or
+adversarial claim about a former employer, even if sourced directly from the candidate.]
 
 ## Where I'm Going
 [Directional narrative. What you're building toward over the next 2–5 years.
@@ -243,9 +248,15 @@ Skills being actively developed. Transitions in progress.]
 [Remote / hybrid / onsite preference. Team size. Culture signals. 
 What environments bring out your best work.]
 
-## Availability
-[Timeline. Open to inbound. Not currently looking. Constraints.]
+## Availability & Job Search Activity
+[Current job-search activity level (1-10) and desired level (1-10); target start date;
+earliest possible start; search deadline if any; notice period/constraints.]
+
+## Work Authorization
+[Citizenship / permanent residency / visa status / sponsorship needs — one line.]
 ```
+
+**Resume-safe vs. conversation-only sections.** Not every section here is resume material — "Most Important Factors," "What I'm Not Interested In," and "Where I'm Going" are public, resume/showcase-safe signal. "Reasons for the Move," "Availability & Job Search Activity," and "Work Authorization" are factual/process content for direct recruiter or showcase Q&A — no one puts a notice period or search intensity on a resume, and "Reasons for the Move" must never be echoed verbatim into a generated resume body or README narrative. Skills that read `intent.md` (`generate`, `showcase`, `publish`) must respect this split; see each skill for specifics.
 
 ---
 
@@ -454,6 +465,7 @@ The following are intentionally deferred from v1.1:
 - **Privacy controls** — `intent.md` may be sensitive ("not interested in X" is career-limiting to publish publicly). Future versions will support `intent-public.md` / `intent-private.md` split, or per-section `visibility` frontmatter flags.
 - **`OPPORTUNITY.md`** — the role-graph counterpart to `RESUME.md`. Describes a role as a structured knowledge graph rather than a job description. Powers two-sided matching. Supply-side problem deferred.
 - **`education/` directory** — for profiles where education depth warrants its own files (doctoral research, thesis projects, relevant coursework).
+- **Career counseling skill** — a skill synthesizing `experience/` + `intent.md` + `BEHAVIOURAL.md` to help think through things like offer evaluation, negotiation strategy, or longer-term career strategy. Explicitly separate from `/talent-brain:intent`, which captures decision-useful signal quickly and is not a counseling conversation. Deferred — no design work started.
 
 ---
 
