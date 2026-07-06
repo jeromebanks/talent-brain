@@ -177,6 +177,28 @@ If yes: generate a new 2–3 sentence summary for the RESUME.md entry, show it, 
 
 Also update `llms.txt` if this was a new entry.
 
+### Sync skills.md
+
+This step exists because skills.md drifts silently otherwise: nothing else in the profile checks whether a technology named in a `stack:` field is actually represented in the capability taxonomy.
+
+Collect every `stack:` value from the Contributions sub-sections you just wrote (new ones, and any changed by this session). Read `skills.md` and check each technology/tool against it — a name counts as "present" if it appears in any entry heading or body, not just an exact section title match.
+
+If everything is already represented, say so briefly and move on — don't manufacture entries.
+
+If anything is missing, propose additions in the existing skills.md format (depth, recency, 1–2 sentences, `_Used at:_` link to this file) and show them before writing, same as any other skills.md edit:
+
+```
+skills.md doesn't yet cover some of what you just described:
+
+**[Skill]** — [depth] — [recency]
+[1–2 sentences on what you did with it, drawn from this interview]
+_Used at:_ [Company](experience/slug.md)
+
+Add these to skills.md? (yes / edit / skip)
+```
+
+Slot each into the most fitting existing `##` section by subject matter; only fall back to a new section or an "Ingested (needs review)" pile if nothing fits. Infer depth from how the interview described the usage (built/led something non-trivial with it → proficient or expert; used it as a supporting tool → familiar) and recency from the role's dates. Don't guess at technologies that weren't actually named in this session's `stack:` fields.
+
 ## Special cases
 
 ### New experience entry (no prior file)
