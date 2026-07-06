@@ -25,6 +25,7 @@ If you are a human forking this schema: this document defines every file, every 
 ├── RESUME.md                   # Human + agent index (~2K tokens)
 ├── SCHEMA.md                   # This file
 ├── intent.md                   # Career preferences, direction, interest/disinterest layer
+├── intent-private.md           # Optional, gitignored. Compensation and anything else not for a public repo
 ├── skills.md                   # Capability taxonomy with depth and recency signals
 ├── resume.md                   # Optional. Rendered general-purpose resume, written by /talent-brain:publish
 │
@@ -245,7 +246,8 @@ adversarial claim about a former employer, even if sourced directly from the can
 Skills being actively developed. Transitions in progress.]
 
 ## Work Style & Environment
-[Remote / hybrid / onsite preference. Team size. Culture signals. 
+[Remote / hybrid / onsite preference. Team size. Culture signals. Current location,
+relocation willingness (and where), workable time zones if not fully remote.
 What environments bring out your best work.]
 
 ## Availability & Job Search Activity
@@ -256,7 +258,32 @@ earliest possible start; search deadline if any; notice period/constraints.]
 [Citizenship / permanent residency / visa status / sponsorship needs — one line.]
 ```
 
-**Resume-safe vs. conversation-only sections.** Not every section here is resume material — "Most Important Factors," "What I'm Not Interested In," and "Where I'm Going" are public, resume/showcase-safe signal. "Reasons for the Move," "Availability & Job Search Activity," and "Work Authorization" are factual/process content for direct recruiter or showcase Q&A — no one puts a notice period or search intensity on a resume, and "Reasons for the Move" must never be echoed verbatim into a generated resume body or README narrative. Skills that read `intent.md` (`generate`, `showcase`, `publish`) must respect this split; see each skill for specifics.
+**Resume-safe vs. conversation-only sections.** Not every section here is resume material — "Most Important Factors," "What I'm Not Interested In," and "Where I'm Going" are public, resume/showcase-safe signal. "Reasons for the Move," "Availability & Job Search Activity," "Work Authorization," and the location/relocation content in "Work Style & Environment" are factual/process content for direct recruiter or showcase Q&A — no one puts a notice period, search intensity, or relocation logistics on a resume, and "Reasons for the Move" must never be echoed verbatim into a generated resume body or README narrative. Skills that read `intent.md` (`generate`, `showcase`, `publish`) must respect this split; see each skill for specifics.
+
+---
+
+### `intent-private.md`
+
+Optional, gitignored by default (`tb-init` adds it to `.gitignore`). Holds intent content the candidate wants captured but not committed to a public repo — currently just compensation expectations. This is a lightweight, interim answer to the deferred "privacy controls" roadmap item below: a second file rather than per-section visibility flags, scoped to the one field (comp) where the tension between "capture it" and "it's a public GitHub file" is sharpest.
+
+Written by `/talent-brain:intent` alongside `intent.md`. **Never read by `generate`, `showcase`, or `publish`** — those produce shareable artifacts (resumes, READMEs, briefs) and comp expectations don't belong in any of them. It exists for the candidate's own reference and for direct verbal negotiation, not for agent-mediated sharing.
+
+**Frontmatter:**
+```yaml
+---
+updated: ""          # required* — YYYY-MM-DD
+---
+```
+
+**Canonical sections:**
+```markdown
+# Private Intent Notes
+
+## Compensation Expectations
+[Target/expectation only — base, equity, bonus structure if relevant, and a floor if
+there is one. Never salary history — asking for it is illegal in several US jurisdictions
+and shouldn't be asked here either.]
+```
 
 ---
 
@@ -462,7 +489,7 @@ Professional recognitions. Format: award name, awarding organization, year, 1-se
 The following are intentionally deferred from v1.1:
 
 - **`BEHAVIOURAL.md`** — structured responses to behavioral interview questions ("Tell me about a time..."), indexed by competency. High value for interview prep; not needed for the initial profile use cases.
-- **Privacy controls** — `intent.md` may be sensitive ("not interested in X" is career-limiting to publish publicly). Future versions will support `intent-public.md` / `intent-private.md` split, or per-section `visibility` frontmatter flags.
+- **Privacy controls (partially addressed in v1.1)** — `intent-private.md` (gitignored) now covers the sharpest case, compensation expectations. Still deferred: per-section `visibility` frontmatter flags for anything else in `intent.md` that a candidate might want to keep out of a public repo (e.g. a pointed "What I'm Not Interested In" entry).
 - **`OPPORTUNITY.md`** — the role-graph counterpart to `RESUME.md`. Describes a role as a structured knowledge graph rather than a job description. Powers two-sided matching. Supply-side problem deferred.
 - **`education/` directory** — for profiles where education depth warrants its own files (doctoral research, thesis projects, relevant coursework).
 - **Career counseling skill** — a skill synthesizing `experience/` + `intent.md` + `BEHAVIOURAL.md` to help think through things like offer evaluation, negotiation strategy, or longer-term career strategy. Explicitly separate from `/talent-brain:intent`, which captures decision-useful signal quickly and is not a counseling conversation. Deferred — no design work started.

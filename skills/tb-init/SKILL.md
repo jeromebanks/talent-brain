@@ -219,6 +219,9 @@ Structure each domain as:
 # Source materials — resumes, LinkedIn exports; contain contact info, not for a public repo
 source/
 
+# Private intent content (e.g. compensation expectations) — not for the public repo
+intent-private.md
+
 # Serena MCP — local index, not part of the repo
 .serena/
 

@@ -1,6 +1,6 @@
 ---
 name: intent
-description: Have a conversation about career intent and preferences, then write intent.md. Use this instead of editing the file by hand. Covers priority factors, disinterest signals, reasons for the move, direction, availability/job-search activity, and work authorization. Works for first-time setup and for revisiting or updating existing intent.
+description: Have a conversation about career intent and preferences, then write intent.md (and intent-private.md for compensation). Use this instead of editing the file by hand. Covers priority factors, disinterest signals, reasons for the move, direction, work style/location, availability/job-search activity, work authorization, and compensation expectations. Works for first-time setup and for revisiting or updating existing intent.
 ---
 
 # Talent Brain — Intent
@@ -31,22 +31,23 @@ That last point matters for structure: recruiters already use intake forms with 
 | What I'm Not Interested In | `fit`/`gap` matching, showcase Q&A | Public, resume-safe |
 | Reasons for the Move | Direct recruiter/showcase Q&A only | **Never echoed into a generated resume or README narrative.** Write it once, professionally, forward-framed. |
 | Where I'm Going | Resume "Interests" line, showcase pitch | Public, resume-safe |
-| Work Style & Environment | showcase Q&A | Public, low-priority context |
+| Work Style & Environment (incl. location/relocation) | showcase Q&A | Public, low-priority context |
 | Availability & Job Search Activity | Direct recruiter/showcase Q&A only | Not resume material — no one puts notice period or search intensity on a resume |
 | Work Authorization | Direct recruiter/showcase Q&A only | Factual, not resume material |
+| Compensation Expectations (`intent-private.md`) | Nowhere automated — candidate's own reference and direct verbal negotiation only | **Never read by `generate`, `showcase`, or `publish`.** Lives in a separate gitignored file, not `intent.md`. |
 
-This grouping is written into `SCHEMA.md` and into `generate`/`showcase`/`publish` — you don't need to re-derive it, just don't violate it: never let Reasons for the Move, Availability/Activity, or Work Authorization content leak into a generated resume body.
+This grouping is written into `SCHEMA.md` and into `generate`/`showcase`/`publish` — you don't need to re-derive it, just don't violate it: never let Reasons for the Move, Availability/Activity, or Work Authorization content leak into a generated resume body, and never write compensation content into `intent.md` itself.
 
 ## Startup
 
-Read `intent.md` if it exists. Assess each section:
+Read `intent.md` if it exists, and check whether `intent-private.md` also exists (don't read its content unless the conversation reaches compensation — just note presence/absence for update-mode framing). Assess each section:
 - All placeholders → **first-time setup**: introduce what you're doing and why it matters
 - Some content → **update mode**: acknowledge what's there, focus on gaps or areas they want to revisit
 
 **First-time opening:**
 > "Let's capture your career intent — what you're actually looking for next, in the same kind of detail a good recruiter would ask for. This file is what makes your profile genuinely useful: a recruiter who reads it knows not to pitch you the wrong thing, and you'll use it to filter opportunities yourself.
 >
-> I'll ask about six areas. Some are quick factual questions, a couple are worth real thought. Takes about 10–15 minutes. Ready?"
+> I'll ask about eight areas. Some are quick factual questions, a couple are worth real thought. Takes about 10–15 minutes. Ready?"
 
 **Update mode:**
 > "I can see you've already captured some intent here. What brings you back — updating your availability, refining what you're looking for, or something else?"
@@ -102,6 +103,10 @@ Follow up:
 
 "How do you work best — remote, hybrid, in-person? Any strong preferences on team size, pace, or structure?"
 
+Also cover location, briefly:
+- "Where are you based, and would you relocate — and if so, where?"
+- "Any time zone constraints if the team isn't fully remote?"
+
 Keep this brief — it's useful context but not the main event.
 
 ### 6. Availability & Job Search Activity
@@ -120,13 +125,23 @@ One direct question, no follow-up needed unless they want to add detail:
 
 "What's your work authorization status — citizen, permanent resident, visa status, or would you need sponsorship?"
 
+### 8. Compensation Expectations
+
+This is the one section that writes to a **different file** (`intent-private.md`, gitignored) — say so before asking:
+
+> "Last one, and it goes in a separate file that stays off the public repo, not `intent.md`: what's your target compensation for the next role?"
+
+Ask for a target/expectation, and a floor if there is one — base, equity, bonus structure if relevant. **Never ask for salary history** — current or past pay at any employer. Asking is illegal in several US jurisdictions and isn't useful signal even where it's legal; expectation is what matters.
+
+If the person says they'd rather not put a number down anywhere, respect that and skip the section — don't push.
+
 ## After the conversation
 
-Tell the user what you're going to write before writing it:
+Tell the user what you're going to write before writing it, for **both files**:
 
-> "Here's what I'm planning to write for `intent.md`. Read through it — if anything is too specific, not specific enough, or doesn't sound like you, tell me and I'll adjust."
+> "Here's what I'm planning to write for `intent.md` — and separately, `intent-private.md` for the compensation number, which stays out of the public repo. Read through both — if anything is too specific, not specific enough, or doesn't sound like you, tell me and I'll adjust."
 
-Show the full proposed `intent.md` content. Wait for approval or edits.
+Show the full proposed content for both files. Wait for approval or edits.
 
 If they want to refine it themselves, offer to open the file:
 - Check if VS Code is available: `code --version`
@@ -158,7 +173,7 @@ visibility: "public"
 [content from conversation]
 
 ## Work Style & Environment
-[content from conversation]
+[content from conversation, including location/relocation]
 
 ## Availability & Job Search Activity
 [current activity 1-10, desired activity 1-10, target start date, earliest start,
@@ -168,14 +183,31 @@ search deadline if any, notice period/constraints]
 [status, one line]
 ```
 
-Update the `updated` date to today.
+If a compensation answer was given, also write `intent-private.md` (create if it doesn't exist — do not add it to `llms.txt` or `RESUME.md`, it's not part of the public manifest):
+
+```markdown
+---
+updated: "[today YYYY-MM-DD]"
+---
+
+# Private Intent Notes
+
+## Compensation Expectations
+[target/expectation, floor if given, equity/bonus notes — never salary history]
+```
+
+Confirm `intent-private.md` is covered by `.gitignore` (`tb-init` adds this by default); if the profile predates that fix, add the line yourself and mention it to the user.
+
+Update the `updated` date to today in whichever file(s) were written.
 
 ## Hard invariants
 
 1. **Write in first person** — this is their voice, not a profile about them
 2. **Specifics over generalities** — if an answer was vague and you couldn't get them to sharpen it, write what they said but note it could be more specific
 3. **Never invent** — only write what they told you
-4. **Show before writing** — always get approval before touching the file
-5. **Visibility default is public** — if they want parts kept private, note that per-section privacy controls are on the roadmap and they can manually mark sections for now
+4. **Show before writing** — always get approval before touching either file
+5. **Visibility default is public** — if they want parts of `intent.md` kept private beyond compensation, note that per-section privacy controls are still on the roadmap and they can manually mark sections for now
 6. **Never write unprovable or adversarial claims about a former employer/colleague**, even sourced directly from the person — reframe forward per the Reasons for the Move guidance above
 7. **This is not a counseling session** — capture facts and preferences, don't process feelings for their own sake; redirect anything that needs deeper processing rather than digging in
+8. **Compensation is expectation only, never history** — don't ask what they currently make or have made; ask what they want next
+9. **`intent-private.md` is never read by `generate`, `showcase`, or `publish`** — if you're running one of those skills and you notice the file exists, don't open it
