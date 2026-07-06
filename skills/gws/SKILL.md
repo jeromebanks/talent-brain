@@ -1,9 +1,11 @@
 ---
 name: gws
-description: Use the Google Workspace CLI (gws) to list and download files from Google Drive without loading file content into the conversation context. Use instead of MCP Google Drive connectors when downloading files locally — connectors read content into context and burn tokens rapidly.
+description: If the gws CLI is installed, use it to list and download files from Google Drive without loading file content into the conversation context. Use instead of MCP Google Drive connectors when downloading files locally — connectors read content into context and burn tokens rapidly. Not part of the core Talent Brain workflow — only relevant if the profile owner has gws set up locally.
 ---
 
 # Google Workspace CLI (gws)
+
+This skill assumes the `gws` CLI is already installed locally — it is personal infrastructure, not something every Talent Brain user will have. If `gws` is not on `PATH`, skip this skill and fall back to the MCP Google Drive connector or ask the user to provide files directly.
 
 Use `gws` to interact with Google Drive from the shell. The critical rule: **always use `--output <path>` when downloading files**. This writes directly to disk and keeps file content out of the conversation context. Never use the MCP Google Drive connector to fetch file content — it reads everything into context and burns tokens.
 

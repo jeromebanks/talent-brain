@@ -102,7 +102,7 @@ Answer honestly from the profile. Missing depth in a key area, a long gap since 
 Return to the through-line. Specifics from the top signals. What you don't find in standard resumes for this type of role.
 
 **"Can they lead a team / handle scale / work in [environment]?"**
-Navigate to Team & Scope sections and Decisions & Tradeoffs sections in the experience files. Answer from what's there.
+Navigate to the Responsibilities section (team/scope signals) and the Contributions atoms (what/stack/impact, including expanded-atom Technical Decisions where present) in the experience files. Answer from what's there.
 
 ### Proactive objection handling
 

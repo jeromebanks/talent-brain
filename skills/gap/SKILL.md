@@ -15,9 +15,9 @@ Optionally: `/talent-brain:gap` can be run after `/talent-brain:fit` in the same
 
 ## Phase 1 — Load and parse
 
-Same as `tb-fit` Phase 1 and Phase 2. Read the profile and parse the JD into requirements + signals.
+Same as `fit` Phase 1 and Phase 2. Read the profile and parse the JD into requirements + signals.
 
-If `tb-fit` was just run in this session, you already have this. Don't repeat the work.
+If `/talent-brain:fit` was just run in this session, you already have this. Don't repeat the work.
 
 ## Phase 2 — Classify gaps
 

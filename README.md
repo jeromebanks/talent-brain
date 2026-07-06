@@ -32,7 +32,7 @@ Open the `talent-brain` folder in Claude Code. All skills load automatically —
 **2. Run init:**
 
 ```
-/talent-brain:init
+/talent-brain:tb-init
 ```
 
 Claude will ask for your name, title, and location, then create your profile at `~/talent-brain-profile`, initialize git, and optionally push it to GitHub. Takes about 2 minutes.
@@ -108,7 +108,7 @@ Claude opens with a pitch built around your strongest signals, then takes questi
 
 **Via GitHub:**
 
-If your profile is on GitHub, anyone who opens it in Claude Code gets Talent Brain automatically — the profile carries its own plugin configuration. They run `/talent-brain:showcase` and go.
+If your profile is on GitHub, anyone who clones it and opens the folder in Claude Code gets Talent Brain automatically — the skills are bundled in `.claude/skills/` and load without any plugin install. They run `/talent-brain:showcase` and go.
 
 ---
 

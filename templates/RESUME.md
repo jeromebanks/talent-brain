@@ -1,12 +1,15 @@
 ---
-schema_version: "1.0"
+schema_version: "1.1"
 name: "{{name}}"
 current_title: "{{current_title}}"
 location: "{{location}}"
-email: "{{email}}"
+emails:
+  - "{{email}}"
 linkedin: "{{linkedin}}"
 github: "{{github}}"
-website: "{{website}}"
+websites:
+  - url: "{{website}}"
+    label: "{{website_label}}"
 updated: "{{today}}"
 ---
 

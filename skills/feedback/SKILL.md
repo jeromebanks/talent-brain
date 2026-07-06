@@ -39,8 +39,8 @@ gh issue create \
 ```
 
 **Title format:**
-- Bug: `[bug] tb-ingest fails to parse LinkedIn ZIP with nested folders`
-- Improvement: `[improvement] tb-excavate should ask about team size earlier`
+- Bug: `[bug] ingest fails to parse LinkedIn ZIP with nested folders`
+- Improvement: `[improvement] excavate should ask about team size earlier`
 - Suggestion: `[suggestion] add support for publications extension`
 
 **Body format:**

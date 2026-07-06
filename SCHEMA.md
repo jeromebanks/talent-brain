@@ -1,5 +1,5 @@
 # Talent Brain — Schema Reference
-_Version 1.0 — Read this file to understand the structure of any profile built with this framework._
+_Version 1.1 — Read this file to understand the structure of any profile built with this framework._
 
 ---
 
@@ -26,6 +26,7 @@ If you are a human forking this schema: this document defines every file, every 
 ├── SCHEMA.md                   # This file
 ├── intent.md                   # Career preferences, direction, interest/disinterest layer
 ├── skills.md                   # Capability taxonomy with depth and recency signals
+├── resume.md                   # Optional. Rendered general-purpose resume, written by /talent-brain:publish
 │
 ├── experience/
 │   └── <company-slug>.md       # One file per employer, kebab-case slug
@@ -121,6 +122,7 @@ A compact, machine-readable index. Follows the [llms.txt convention](https://llm
 - [RESUME.md](RESUME.md): Full career index — experience, projects, skills summary, education
 - [intent.md](intent.md): Career preferences, interests, what I'm not interested in, directional goals
 - [skills.md](skills.md): Capability taxonomy with depth and recency signals
+- [resume.md](resume.md): Rendered general-purpose resume (optional, present only after /talent-brain:publish has run)
 
 ## Experience
 - [experience/<slug>.md](experience/<slug>.md): [Company name] — [title] ([start]–[end])
@@ -144,7 +146,7 @@ The primary index. Target: ~2,000 tokens. Human-scannable and agent-navigable.
 **Frontmatter** (required fields marked with `*`):
 ```yaml
 ---
-schema_version: "1.0"          # required*
+schema_version: "1.1"          # required*
 name: ""                        # required* — full name
 current_title: ""               # required* — current role title or target title if seeking
 location: ""                    # required* — city, region/country; be as specific as comfortable
@@ -337,8 +339,35 @@ For consulting/contract roles with multiple clients, use H3 client sections and 
            or <!-- not yet captured -->]
 ```
 
-**Decisions & Tradeoffs:** Not captured in experience files. Lives in `behavioural/` (future extension)
-for interview prep and system design depth. Does not belong in the resume knowledge graph.
+**Expanded atom (optional):** For a contribution whose depth warrants more than the three
+what/stack/impact lines — and that can't become a `projects/` file because it's
+employer-internal, not public or cross-employer work — the initiative sub-section may
+instead carry the `projects/` file's H4 structure directly:
+
+```markdown
+### [Initiative name]
+
+#### Problem
+[What gap or need existed. Why it mattered.]
+
+#### What I Built
+[The artifact itself. Be specific about what was designed, implemented, or led.]
+
+#### Technical Decisions
+[Key architectural or design choices and why, especially non-obvious tradeoffs.]
+
+#### Through-Line
+[How this connects to the broader narrative of the role or career.]
+```
+
+Use the plain what/stack/impact atom by default; reach for the expanded form only when a
+single initiative has enough independent depth to need it (e.g. a flagship project inside
+a long tenure). Both forms may appear under the same `## Contributions` section in one file.
+
+**Decisions & Tradeoffs:** Not captured as a general experience-file section. Deep,
+initiative-specific decisions belong in the expanded atom's Technical Decisions sub-section
+above; broader interview-prep material lives in `behavioural/` (future extension) and does
+not belong in the resume knowledge graph.
 
 ---
 
@@ -419,9 +448,22 @@ Professional recognitions. Format: award name, awarding organization, year, 1-se
 
 ## Roadmap
 
-The following are intentionally deferred from v1.0:
+The following are intentionally deferred from v1.1:
 
 - **`BEHAVIOURAL.md`** — structured responses to behavioral interview questions ("Tell me about a time..."), indexed by competency. High value for interview prep; not needed for the initial profile use cases.
 - **Privacy controls** — `intent.md` may be sensitive ("not interested in X" is career-limiting to publish publicly). Future versions will support `intent-public.md` / `intent-private.md` split, or per-section `visibility` frontmatter flags.
 - **`OPPORTUNITY.md`** — the role-graph counterpart to `RESUME.md`. Describes a role as a structured knowledge graph rather than a job description. Powers two-sided matching. Supply-side problem deferred.
 - **`education/` directory** — for profiles where education depth warrants its own files (doctoral research, thesis projects, relevant coursework).
+
+---
+
+## Changelog
+
+### 1.1 (2026-07-06)
+- **Experience file restructure**: `experience/<slug>.md` now uses `Context` / `Responsibilities` (optional) / `Contributions` sections with `what`/`stack`/`impact` atoms per named initiative. Replaces the older `Outcomes`, `Decisions & Tradeoffs`, `Tools & Methods`, `Team & Scope` sections (still tolerated for read compatibility, no longer written).
+- **Expanded atom** documented: a Contribution may carry `projects/`-style H4 sub-sections (`Problem` / `What I Built` / `Technical Decisions` / `Through-Line`) instead of the plain what/stack/impact lines, for employer-internal work with depth that can't become a public `projects/` file.
+- `resume.md` (the rendered output of `/talent-brain:publish`) added to the file tree and `llms.txt` manifest contract.
+- `publish` is responsible for refreshing a profile's `SCHEMA.md` copy from the plugin on each run, so schema updates propagate to existing profiles.
+
+### 1.0 (2026-06-08)
+- Initial release: `RESUME.md` index, `experience/`, `projects/`, `skills.md`, `intent.md`, `extensions/`, agent contract and invariants.

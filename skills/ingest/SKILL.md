@@ -26,7 +26,7 @@ Process each input file:
 Read the file directly. Extract structured career data per the extraction schema below.
 
 ### LinkedIn ZIP export
-Run: `unzip -o "<file>" -d /tmp/talent-brain:ingest-$(date +%s)/`
+Run: `unzip -o "<file>" -d /tmp/talent-brain-ingest-$(date +%s)/`
 
 Then read whichever of these files are present:
 - `Positions.csv` → work history
@@ -87,7 +87,7 @@ Check the current directory for an existing profile:
 - Read `RESUME.md` if present
 - List all files in `experience/` and read their frontmatter (company, slug, start, end)
 - List all files in `projects/` and read their frontmatter (name, slug)
-- Note: if no profile exists, remind the user to run `/talent-brain:init` first and stop
+- Note: if no profile exists, remind the user to run `/talent-brain:tb-init` first and stop
 
 ## Phase 3 — Plan actions
 
@@ -225,7 +225,7 @@ If `skills.md` has no sections yet (stubs only), append a `## Ingested (needs re
 
 **[Skill]** — expert|proficient|familiar — active|recent|historical
 [1–2 sentences from source]
-_Used at:_ [Company](../experience/slug.md)
+_Used at:_ [Company](experience/slug.md)
 _Reference:_ [Name](url)
 ```
 

@@ -81,14 +81,17 @@ For **Path B**: populate `name` from what the user provided. Leave all other fro
 
 ```markdown
 ---
-schema_version: "1.0"
+schema_version: "1.1"
 name: "[name]"
 current_title: "[title or empty]"
 location: "[location or empty]"
-email: "[email or empty]"
+emails:
+  - "[email or empty]"
 linkedin: "[url or empty]"
 github: "[url or empty]"
-website: "[url or empty]"
+websites:
+  - url: "[url or empty]"
+    label: "[label or empty]"
 updated: "[today]"
 ---
 
@@ -202,6 +205,22 @@ Structure each domain as:
 ## Extensions
 ```
 
+### `.gitignore`
+
+```
+# Source materials — resumes, LinkedIn exports; contain contact info, not for a public repo
+source/
+
+# Serena MCP — local index, not part of the repo
+.serena/
+
+# Claude Code — local session settings (permissions, personal config)
+.claude/settings.local.json
+
+# macOS
+.DS_Store
+```
+
 ### `SCHEMA.md`
 
 Copy the Talent Brain SCHEMA.md from the plugin into the profile root. This makes the profile self-contained — agents can read it without needing access to the plugin.
@@ -214,10 +233,17 @@ Copy all Talent Brain skills into the profile folder so they work immediately wi
 
 If running from the plugin repo (detected in Step 2), run:
 ```
-cp -rL .claude/skills <full-path>/.claude/skills
+mkdir -p <full-path>/.claude/skills
+cp -RL .claude/skills/. <full-path>/.claude/skills/
 ```
 
-The `-L` flag dereferences symlinks so the actual skill files are copied, not the symlink pointers.
+The `-L` flag dereferences symlinks so the actual skill files are copied, not the symlink pointers. The trailing `/.` on the source and `/` on the destination copy the *contents* of `.claude/skills` into the destination directory — this is idempotent whether or not `<full-path>/.claude/skills` already exists, unlike `cp -rL src dst` which nests `src` one level deeper on repeat runs.
+
+Verify the copy landed correctly before continuing:
+```
+ls <full-path>/.claude/skills/*/SKILL.md
+```
+Every skill directory (cover-letter, excavate, feedback, fit, gap, generate, gws, ingest, intent, publish, showcase, tb-init) should print a `SKILL.md` path. If any are missing or nested under an extra `skills/` directory, the copy failed — do not proceed until it's fixed.
 
 ### `.claude/settings.json`
 
@@ -234,68 +260,7 @@ The `-L` flag dereferences symlinks so the actual skill files are copied, not th
 
 ### `CLAUDE.md`
 
-Generate this file verbatim — it is boilerplate and does not contain the candidate's name.
-
-```markdown
-# Talent Brain Career Profile
-
-This is a Talent Brain career profile, built and maintained using the [Talent Brain plugin](https://github.com/jeromebanks/talent-brain). The plugin is configured in `.claude/settings.json` and loads automatically when this folder is opened in Claude Code. Skills are also copied into `.claude/skills/` and work without any plugin install.
-
-## Profile structure
-
-- **`RESUME.md`** — the career index. Start here. Links out to detail files.
-- **`intent.md`** — career preferences, what the candidate is looking for, what they're not.
-- **`skills.md`** — capability taxonomy with depth and recency signals.
-- **`llms.txt`** — machine-readable manifest of all profile files.
-- **`experience/<company>.md`** — one file per employer, with context, contributions, outcomes, tools.
-- **`projects/<name>.md`** — one file per notable project or open-source contribution.
-- **`extensions/`** — publications, certifications, speaking engagements (if present).
-
-Always start with `RESUME.md`. Fetch detail files on demand — do not pre-load everything.
-
-## Available skills
-
-### For hiring managers and recruiters
-
-| Command | What it does |
-|---|---|
-| `/talent-brain:showcase` | Interactive presentation of the candidate's background, then open Q&A. |
-
-### For profile owners
-
-| Command | What it does |
-|---|---|
-| `/talent-brain:ingest [file]` | Add career history from a resume PDF or LinkedIn export. Additive only — never overwrites existing content. |
-| `/talent-brain:excavate` | Structured interview to deepen a specific role or project. Use when a file has `<!-- not yet captured -->` sections. |
-| `/talent-brain:intent` | Guided conversation to capture career goals and preferences, then writes `intent.md`. |
-| `/talent-brain:generate [jd]` | Generate a tailored resume for a job description, or a general-purpose resume. |
-| `/talent-brain:fit [jd]` | Structured fit analysis against a job description — what matches, what doesn't, what's missing. |
-| `/talent-brain:gap [jd]` | Identify gaps between the profile and a target role: hard gaps, profile gaps, framing gaps. |
-| `/talent-brain:cover-letter [jd]` | Draft a cover letter grounded in the actual profile. |
-
-## Common tasks
-
-- "Tell me about this candidate" → `/talent-brain:showcase`
-- "Add a new job" → `/talent-brain:ingest [file]` or `/talent-brain:excavate`
-- "Print a resume for this posting" → `/talent-brain:generate [jd]`
-- "How do I fit this role?" → `/talent-brain:fit [jd]`
-- "What am I missing for this role?" → `/talent-brain:gap [jd]`
-- "Write a cover letter" → `/talent-brain:cover-letter [jd]`
-- "Update what I'm looking for" → `/talent-brain:intent`
-- "Add depth to a specific role" → `/talent-brain:excavate`
-
-## Agent orientation
-
-1. Read `RESUME.md` first to orient before responding to any request.
-2. `intent.md` must never be auto-populated from a resume or inferred goals — it comes from the owner directly via `/talent-brain:intent`.
-3. Files with `<!-- not yet captured -->` are real but empty stubs — suggest `/talent-brain:excavate` to fill them.
-4. The `skills.md` "Ingested (needs review)" section contains raw skills needing depth and recency signals added before they're useful.
-
-## Plugin source
-
-- Plugin: [github.com/jeromebanks/talent-brain](https://github.com/jeromebanks/talent-brain)
-- Schema reference: `SCHEMA.md` in this folder
-```
+This file is boilerplate and does not contain the candidate's name — read it from the canonical template (two levels up from this skill: `../../templates/CLAUDE.md`) and write it verbatim to `<profile-root>/CLAUDE.md`. Do not embed a copy of its text in this skill — the template file is the single source of truth, so schema/skill-reference updates only need to happen in one place.
 
 ### `README.md`
 
@@ -316,7 +281,7 @@ Open this folder in [Claude Code](https://claude.ai/code) and run:
 /talent-brain:showcase
 ```
 
-You'll get an interactive presentation of [name]'s background, followed by Q&A. No setup required — the plugin loads automatically.
+You'll get an interactive presentation of [name]'s background, followed by Q&A. No setup required — the skills are bundled in this folder and load automatically.
 
 Or just ask questions directly — Claude will navigate the profile and answer:
 
@@ -403,8 +368,8 @@ gh repo edit [username]/[reponame] --add-topic talent-brain-profile
 To share with a recruiter or hiring manager:
   Cowork:  Open this folder in Claude, start a Cowork session, share the link.
            They join in a browser — no install needed on their end.
-  Direct:  Share the GitHub URL. If they open it in Claude Code,
-           the plugin loads automatically and they can run /talent-brain:showcase.
+  Direct:  Share the GitHub URL. If they clone it and open it in Claude Code,
+           the bundled skills load automatically and they can run /talent-brain:showcase.
 ```
 
 ## Step 7 — Confirm and orient
@@ -436,8 +401,10 @@ Files created:
   skills.md                ← capability taxonomy
   llms.txt                 ← agent manifest
   SCHEMA.md                ← schema reference
+  .gitignore               ← keeps source/ and other local-only material out of the repo
   CLAUDE.md                ← orients Claude when this folder is opened
-  .claude/settings.json    ← auto-loads the plugin for anyone who opens this folder
+  .claude/skills/          ← bundled skills; auto-load when this folder is opened, no plugin install needed
+  .claude/settings.json    ← references the plugin as a fallback for marketplace installs
 
 Directories created:
   experience/     ← one file per employer

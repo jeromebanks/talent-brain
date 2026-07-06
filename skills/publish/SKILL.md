@@ -1,3 +1,8 @@
+---
+name: publish
+description: Publish an updated Talent Brain profile — generate a current general-purpose resume, rebuild README.md with a compelling narrative, and commit/push to the profile's GitHub repo. Use when the profile owner wants to push recent changes (new excavation, ingest, intent updates) live and share an up-to-date link.
+---
+
 # Talent Brain — Publish
 
 You are helping the profile owner publish an updated version of their career profile. This skill is for the **profile owner** — not for hiring managers or recruiters.
@@ -7,7 +12,11 @@ Publishing does three things:
 2. Rebuilds README.md with a rich, compelling narrative (the "big model" update)
 3. Commits and pushes everything to the GitHub repo
 
-## Step 1 — Check profile completeness
+## Step 1 — Refresh SCHEMA.md
+
+Compare `<profile-root>/SCHEMA.md` against the plugin's canonical copy (`../../SCHEMA.md` from this skill, i.e. two levels up). If the version line at the top differs, overwrite the profile's copy with the plugin's — this keeps existing profiles current as the schema evolves. Silent unless a change was made; if made, note it in the final published summary ("SCHEMA.md refreshed to v[X.Y]").
+
+## Step 2 — Check profile completeness
 
 Read `RESUME.md`, `intent.md`, and list the files in `experience/`.
 
@@ -26,7 +35,7 @@ Continue? (yes / fill gaps first)
 
 If the user wants to fill gaps first, stop here and remind them to run this skill again when ready.
 
-## Step 2 — Generate resume
+## Step 3 — Generate resume
 
 Read the full profile: `RESUME.md`, all `experience/` files, all `projects/` files, `skills.md`, and `intent.md`.
 
@@ -55,9 +64,9 @@ Format:
 
 Show the resume and ask: "Save this as `resume.md`? (yes / skip)"
 
-If yes, write it to `<profile-root>/resume.md`. If a `resume.md` already exists, overwrite it — this file is always the current general-purpose resume.
+If yes, write it to `<profile-root>/resume.md`. If a `resume.md` already exists, overwrite it — this file is always the current general-purpose resume. If this is the first time `resume.md` is being written, add it to `llms.txt`'s Core Files section: `- [resume.md](resume.md): Rendered general-purpose resume`.
 
-## Step 3 — Rebuild README.md
+## Step 4 — Rebuild README.md
 
 This is the high-effort step. Read the entire profile before writing.
 
@@ -103,7 +112,7 @@ Or just ask questions directly — Claude will navigate the profile and answer:
 - "Have they led or mentored engineers?"
 - "How do they compare to what we need for [describe the problem]?"
 
-No setup required. The plugin loads automatically.
+No setup required. The skills are bundled in this folder and load automatically.
 
 ---
 
@@ -131,12 +140,12 @@ Show the new README.md and ask: "Replace README.md with this? (yes / edit / skip
 - **edit** — show the draft again and let the user give feedback; revise and re-ask
 - **skip** — leave README.md unchanged
 
-## Step 4 — Commit and push
+## Step 5 — Commit and push
 
-After writing any files (resume.md and/or README.md), commit and push:
+After writing any files (resume.md, README.md, and/or SCHEMA.md), commit and push:
 
 ```
-git add resume.md README.md
+git add resume.md README.md SCHEMA.md llms.txt
 git commit -m "Publish: update resume and README — [today's date]"
 git push
 ```
