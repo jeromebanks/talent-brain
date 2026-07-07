@@ -11,7 +11,7 @@ This is not a form. It is a conversation. Ask one question at a time. Follow up 
 
 ## Startup — identify the target
 
-### If an argument was provided (e.g., `/talent-brain:excavate gsk` or `/talent-brain:excavate projects/brickhouse`):
+### If an argument was provided (e.g., `/excavate gsk` or `/excavate projects/brickhouse`):
 - Resolve it to a file path: check `experience/<arg>.md`, `projects/<arg>.md`, and `<arg>.md` in that order
 - If no file found, treat the argument as a new company/project name and proceed in new entry mode
 

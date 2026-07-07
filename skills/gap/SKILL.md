@@ -9,15 +9,15 @@ You are identifying what stands between this candidate's profile and a strong ca
 
 ## Inputs
 
-Same as `/talent-brain:fit` — accept a job description as pasted text, file path, or URL. If no input is provided, ask for it.
+Same as `/fit` — accept a job description as pasted text, file path, or URL. If no input is provided, ask for it.
 
-Optionally: `/talent-brain:gap` can be run after `/talent-brain:fit` in the same session. If a fit assessment was just completed, you have the analysis already. Skip to Phase 3.
+Optionally: `/gap` can be run after `/fit` in the same session. If a fit assessment was just completed, you have the analysis already. Skip to Phase 3.
 
 ## Phase 1 — Load and parse
 
 Same as `fit` Phase 1 and Phase 2. Read the profile and parse the JD into requirements + signals.
 
-If `/talent-brain:fit` was just run in this session, you already have this. Don't repeat the work.
+If `/fit` was just run in this session, you already have this. Don't repeat the work.
 
 ## Phase 2 — Classify gaps
 
@@ -25,7 +25,7 @@ For every requirement that was **Partial** or **Not found** in the fit assessmen
 
 **Hard gap** — the experience genuinely doesn't appear to exist in the profile, and there's no reasonable adjacent experience to bridge from. This requires either developing the skill/experience, or making an honest case in a cover letter for why it isn't needed.
 
-**Profile gap** — the experience likely exists but isn't captured in the profile. Signs: the candidate had a relevant role but the experience file is sparse or a stub; the skills.md has a related entry; the work is mentioned but not elaborated on. Fix: `/talent-brain:excavate`. These are wins hiding in the profile.
+**Profile gap** — the experience likely exists but isn't captured in the profile. Signs: the candidate had a relevant role but the experience file is sparse or a stub; the skills.md has a related entry; the work is mentioned but not elaborated on. Fix: `/excavate`. These are wins hiding in the profile.
 
 **Framing gap** — the experience is captured but isn't positioned to speak to this role. The requirement uses different language than the profile, or the relevant work is buried in a context that doesn't signal its relevance here. Fix: reframe the section to make the connection explicit.
 
@@ -56,7 +56,7 @@ The profile doesn't capture them yet.
 
 ○  [Requirement]
    [What makes you think the experience might exist. Where to look in the profile.]
-   → Run: /talent-brain:excavate [relevant-slug]   to surface this
+   → Run: /excavate [relevant-slug]   to surface this
 
 ○  [Requirement]
    ...
@@ -105,11 +105,11 @@ read the relevant experience files. Note which files are worth reading:
 
 After the output, add:
 
-> **Profile gaps are the fastest wins.** Before applying, run `/talent-brain:excavate` on the roles flagged above. You likely have relevant experience that's just not on the page yet.
+> **Profile gaps are the fastest wins.** Before applying, run `/excavate` on the roles flagged above. You likely have relevant experience that's just not on the page yet.
 >
 > **Framing gaps are the second fastest.** Read the suggested reframes and update those sections directly — this doesn't require new experience, just clearer positioning.
 >
-> **Hard gaps are honest signals, not disqualifiers.** Many roles list requirements that aren't truly must-haves. The cover letter and conversation are where you can make the case for adjacent capability. `/talent-brain:cover-letter` can help frame this.
+> **Hard gaps are honest signals, not disqualifiers.** Many roles list requirements that aren't truly must-haves. The cover letter and conversation are where you can make the case for adjacent capability. `/cover-letter` can help frame this.
 
 ## Hard invariants
 

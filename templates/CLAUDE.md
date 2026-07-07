@@ -20,36 +20,36 @@ Always start with `RESUME.md`. Fetch detail files on demand — do not pre-load 
 
 | Command | What it does |
 |---|---|
-| `/talent-brain:showcase` | Interactive presentation of the candidate's background, then open Q&A. |
+| `/showcase` | Interactive presentation of the candidate's background, then open Q&A. |
 
 ### For profile owners
 
 | Command | What it does |
 |---|---|
-| `/talent-brain:ingest [file]` | Add career history from a resume PDF or LinkedIn export. Additive only — never overwrites existing content. |
-| `/talent-brain:excavate` | Structured interview to deepen a specific role or project. Use when a file has `<!-- not yet captured -->` sections. |
-| `/talent-brain:intent` | Guided conversation to capture career goals and preferences, then writes `intent.md`. |
-| `/talent-brain:generate [jd]` | Generate a tailored resume for a job description, or a general-purpose resume. |
-| `/talent-brain:fit [jd]` | Structured fit analysis against a job description — what matches, what doesn't, what's missing. |
-| `/talent-brain:gap [jd]` | Identify gaps between the profile and a target role: hard gaps, profile gaps, framing gaps. |
-| `/talent-brain:cover-letter [jd]` | Draft a cover letter grounded in the actual profile. |
+| `/ingest [file]` | Add career history from a resume PDF or LinkedIn export. Additive only — never overwrites existing content. |
+| `/excavate` | Structured interview to deepen a specific role or project. Use when a file has `<!-- not yet captured -->` sections. |
+| `/intent` | Guided conversation to capture career goals and preferences, then writes `intent.md`. |
+| `/generate [jd]` | Generate a tailored resume for a job description, or a general-purpose resume. |
+| `/fit [jd]` | Structured fit analysis against a job description — what matches, what doesn't, what's missing. |
+| `/gap [jd]` | Identify gaps between the profile and a target role: hard gaps, profile gaps, framing gaps. |
+| `/cover-letter [jd]` | Draft a cover letter grounded in the actual profile. |
 
 ## Common tasks
 
-- "Tell me about this candidate" → `/talent-brain:showcase`
-- "Add a new job" → `/talent-brain:ingest [file]` or `/talent-brain:excavate`
-- "Print a resume for this posting" → `/talent-brain:generate [jd]`
-- "How do I fit this role?" → `/talent-brain:fit [jd]`
-- "What am I missing for this role?" → `/talent-brain:gap [jd]`
-- "Write a cover letter" → `/talent-brain:cover-letter [jd]`
-- "Update what I'm looking for" → `/talent-brain:intent`
-- "Add depth to a specific role" → `/talent-brain:excavate`
+- "Tell me about this candidate" → `/showcase`
+- "Add a new job" → `/ingest [file]` or `/excavate`
+- "Print a resume for this posting" → `/generate [jd]`
+- "How do I fit this role?" → `/fit [jd]`
+- "What am I missing for this role?" → `/gap [jd]`
+- "Write a cover letter" → `/cover-letter [jd]`
+- "Update what I'm looking for" → `/intent`
+- "Add depth to a specific role" → `/excavate`
 
 ## Agent orientation
 
 1. Read `RESUME.md` first to orient before responding to any request.
-2. `intent.md` must never be auto-populated from a resume or inferred goals — it comes from the owner directly via `/talent-brain:intent`.
-3. Files with `<!-- not yet captured -->` are real but empty stubs — suggest `/talent-brain:excavate` to fill them.
+2. `intent.md` must never be auto-populated from a resume or inferred goals — it comes from the owner directly via `/intent`.
+3. Files with `<!-- not yet captured -->` are real but empty stubs — suggest `/excavate` to fill them.
 4. The `skills.md` "Ingested (needs review)" section contains raw skills needing depth and recency signals added before they're useful.
 
 ## Plugin source

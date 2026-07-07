@@ -11,7 +11,7 @@ You are drafting a cover letter for a specific job application. The goal is a sp
 
 Requires a job description. Accept as pasted text, file path, or URL. If no JD is provided, ask for it.
 
-Optional: `/talent-brain:cover-letter --tone [formal|direct|conversational]` — default is direct.
+Optional: `/cover-letter --tone [formal|direct|conversational]` — default is direct.
 
 ## Phase 1 — Load the profile and run fit mapping
 
@@ -23,7 +23,7 @@ Read:
 
 Parse the JD for: what the role is actually asking for, what problem this hire solves, any cultural or environmental signals.
 
-If `/talent-brain:fit` was just run in this session, use that analysis. Otherwise, do a light fit mapping: identify the 2–3 strongest matches between the profile and the JD.
+If `/fit` was just run in this session, use that analysis. Otherwise, do a light fit mapping: identify the 2–3 strongest matches between the profile and the JD.
 
 ## Phase 2 — Identify the letter's argument
 
@@ -101,7 +101,7 @@ Gaps addressed: [list, or "none"]
 
 To save: copy the above.
 To revise: describe what to change or ask me to adjust the tone/emphasis.
-For the resume to accompany this: /talent-brain:generate [same jd]
+For the resume to accompany this: /generate [same jd]
 ```
 
 ## After the draft

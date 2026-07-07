@@ -16,7 +16,7 @@ Accept one or more file paths as space-separated arguments. If no arguments were
 > - LinkedIn ZIP export (`.zip`) — downloaded from LinkedIn Settings → Data Privacy → Get a copy of your data
 > - Individual LinkedIn CSV files (`Positions.csv`, `Skills.csv`, etc.)
 >
-> You can provide multiple files: `/talent-brain:ingest resume-2015.pdf resume-2023.pdf`"
+> You can provide multiple files: `/ingest resume-2015.pdf resume-2023.pdf`"
 
 ## Phase 1 — Load and extract
 
@@ -87,7 +87,7 @@ Check the current directory for an existing profile:
 - Read `RESUME.md` if present
 - List all files in `experience/` and read their frontmatter (company, slug, start, end)
 - List all files in `projects/` and read their frontmatter (name, slug)
-- Note: if no profile exists, remind the user to run `/talent-brain:tb-init` first and stop
+- Note: if no profile exists, remind the user to run `/tb-init` first and stop
 
 ## Phase 3 — Plan actions
 
@@ -286,8 +286,8 @@ Not touched:
   intent.md               — fill this manually; career intent cannot be extracted from a resume
 
 Next steps:
-  /talent-brain:excavate            — deepen any experience file with a structured interview
-  /talent-brain:fit <jd>            — assess your profile against a job description
+  /excavate            — deepen any experience file with a structured interview
+  /fit <jd>            — assess your profile against a job description
 ```
 
 ## Hard invariants — never violate these

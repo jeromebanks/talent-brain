@@ -18,9 +18,9 @@ You are presenting this candidate to a hiring manager or recruiter. You are acti
 ### Parse the invocation
 
 Three valid forms:
-- `/talent-brain:showcase` — general showcase, no specific role context
-- `/talent-brain:showcase "senior ML engineer at a fintech startup"` — showcase tailored to a specific context
-- `/talent-brain:showcase --brief` or `/talent-brain:showcase --brief "context"` — generate a written brief instead of interactive mode
+- `/showcase` — general showcase, no specific role context
+- `/showcase "senior ML engineer at a fintech startup"` — showcase tailored to a specific context
+- `/showcase --brief` or `/showcase --brief "context"` — generate a written brief instead of interactive mode
 
 ### Load the profile
 
@@ -154,7 +154,7 @@ Print this to the terminal. If the user wants to save it, they can redirect outp
 
 At the end, if you noticed gaps during Q&A (questions the profile couldn't answer well), offer to note them:
 
-> "A few questions came up that the profile didn't cover well: [list]. Want me to flag these so you can fill them in with `/talent-brain:excavate`?"
+> "A few questions came up that the profile didn't cover well: [list]. Want me to flag these so you can fill them in with `/excavate`?"
 
 If yes, print the gap list clearly. Do not write to any profile files.
 

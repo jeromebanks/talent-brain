@@ -289,7 +289,7 @@ Generate this file with the candidate's name and identity populated. The structu
 Open this folder in [Claude Code](https://claude.ai/code) and run:
 
 ```
-/talent-brain:showcase
+/showcase
 ```
 
 You'll get an interactive presentation of [name]'s background, followed by Q&A. No setup required — the skills are bundled in this folder and load automatically.
@@ -307,14 +307,14 @@ Or just ask questions directly — Claude will navigate the profile and answer:
 
 | What you want to do | Command |
 |---|---|
-| Add a new resume or job | `/talent-brain:ingest [file]` |
-| Deepen a role with a structured interview | `/talent-brain:excavate` |
-| Update career goals and preferences | `/talent-brain:intent` |
-| Generate a resume for a job posting | `/talent-brain:generate [jd]` |
-| Check fit against a role | `/talent-brain:fit [jd]` |
-| Find gaps for a target role | `/talent-brain:gap [jd]` |
-| Draft a cover letter | `/talent-brain:cover-letter [jd]` |
-| Publish updates to the repo | `/talent-brain:publish` |
+| Add a new resume or job | `/ingest [file]` |
+| Deepen a role with a structured interview | `/excavate` |
+| Update career goals and preferences | `/intent` |
+| Generate a resume for a job posting | `/generate [jd]` |
+| Check fit against a role | `/fit [jd]` |
+| Find gaps for a target role | `/gap [jd]` |
+| Draft a cover letter | `/cover-letter [jd]` |
+| Publish updates to the repo | `/publish` |
 
 ---
 
@@ -325,7 +325,7 @@ Built with [Talent Brain](https://github.com/jeromebanks/talent-brain).
 
 If the user provided a file in Step 1, run the ingest skill on that file now.
 
-Follow the full `/talent-brain:ingest` flow with the provided file. The profile was just created in Step 4, so the Phase 2 "no profile exists" check is satisfied. All other ingest phases (extract, plan, confirm, write, update skills.md, update RESUME.md, update llms.txt, report) run normally.
+Follow the full `/ingest` flow with the provided file. The profile was just created in Step 4, so the Phase 2 "no profile exists" check is satisfied. All other ingest phases (extract, plan, confirm, write, update skills.md, update RESUME.md, update llms.txt, report) run normally.
 
 The confirmation prompt in ingest Phase 3 ("Proceed?") is intentional — keep it. It shows the user what was parsed before writing, which is useful even on first run.
 
@@ -380,7 +380,7 @@ To share with a recruiter or hiring manager:
   Cowork:  Open this folder in Claude, start a Cowork session, share the link.
            They join in a browser — no install needed on their end.
   Direct:  Share the GitHub URL. If they clone it and open it in Claude Code,
-           the bundled skills load automatically and they can run /talent-brain:showcase.
+           the bundled skills load automatically and they can run /showcase.
 ```
 
 ## Step 7 — Confirm and orient
@@ -388,7 +388,7 @@ To share with a recruiter or hiring manager:
 **Path A (bootstrapped from a file):**
 ```
 ✓ Talent Brain profile initialized and bootstrapped at [path]
-  README.md generated — run /talent-brain:showcase later to upgrade it with a full narrative
+  README.md generated — run /showcase later to upgrade it with a full narrative
 
 [Ingest summary from Step 5]
 
@@ -396,9 +396,9 @@ Not populated:
   intent.md    ← fill this manually — what you want next
 
 Next steps:
-  /talent-brain:intent        — capture what you actually want next (most important)
-  /talent-brain:excavate      — deepen any role with a structured interview
-  /talent-brain:ingest [file] — add another resume or LinkedIn export
+  /intent        — capture what you actually want next (most important)
+  /excavate      — deepen any role with a structured interview
+  /ingest [file] — add another resume or LinkedIn export
 ```
 
 **Path B (stubs only):**
@@ -423,15 +423,15 @@ Directories created:
   extensions/     ← optional: publications, speaking, certifications, etc.
 
 Your profile is empty stubs. Next steps:
-  /talent-brain:ingest [file] — populate from an existing resume PDF or LinkedIn export
-  /talent-brain:excavate      — guided interview to capture your history from scratch
+  /ingest [file] — populate from an existing resume PDF or LinkedIn export
+  /excavate      — guided interview to capture your history from scratch
 
-Most important: /talent-brain:intent — capture what you actually want next
+Most important: /intent — capture what you actually want next
 ```
 
 ## Important constraints
 
-- **`intent.md` is never populated from any source** — this applies to both paths. Career intent must come from the user directly via `/talent-brain:intent`.
+- **`intent.md` is never populated from any source** — this applies to both paths. Career intent must come from the user directly via `/intent`.
 - **Path B is stubs-only.** Do not populate any section content. Do not invent or assume career history, skills, or preferences.
 - **Path A delegates to ingest.** Ingest's own invariants apply — additive only, never overwrite content, source fidelity.
-- If the user asks you to "just fill something in" on Path B, decline politely and direct them to `/talent-brain:ingest` or `/talent-brain:excavate`.
+- If the user asks you to "just fill something in" on Path B, decline politely and direct them to `/ingest` or `/excavate`.

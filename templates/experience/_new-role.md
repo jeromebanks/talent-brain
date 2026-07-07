@@ -16,5 +16,5 @@ employment_type: "full-time"
 
 ## Contributions
 
-<!-- not yet captured — use /talent-brain:excavate to add initiatives -->
+<!-- not yet captured — use /excavate to add initiatives -->
 

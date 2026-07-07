@@ -17,6 +17,7 @@
 - `ingest`'s generated `_Used at:_` links now resolve correctly from `skills.md` at the profile root
 - Right-sized "plugin loads automatically" claims — the actual mechanism is bundled `.claude/skills/`, not the inert `plugins` key in `settings.json`
 - `tb-init` now generates a `.gitignore` for every new profile (`source/`, `.serena/`, local settings)
+- Fixed skill-invocation examples across all docs and skills: the only documented install path (clone the repo, open the folder — no plugin install) loads skills bare via `.claude/skills/`, so every example now reads `/skill-name` instead of the incorrect `/talent-brain:skill-name`, which only applies to a marketplace-plugin install this project doesn't currently document
 
 ## [0.1.0] — 2026-06-08
 

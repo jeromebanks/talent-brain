@@ -1,6 +1,6 @@
 ---
 name: intent
-description: Have a conversation about career intent and preferences, then write intent.md (and intent-private.md for compensation). Use this instead of editing the file by hand. Covers priority factors, disinterest signals, reasons for the move, direction, work style/location, availability/job-search activity, work authorization, and compensation expectations. Works for first-time setup and for revisiting or updating existing intent.
+description: Have a conversation about career intent and preferences, then write intent.md (and intent-private.md for compensation). Use this instead of editing the file by hand. Covers priority factors (including target level/scope), disinterest signals (including industry and tech-stack vetoes), reasons for the move, direction, work style/location, availability/job-search activity, work authorization, and compensation expectations. Works for first-time setup and for revisiting or updating existing intent.
 ---
 
 # Talent Brain — Intent
@@ -68,6 +68,10 @@ Then get qualitative color for the top 1–2 factors:
 - "What would you be doing day-to-day in that ideal role?"
 - "Is there a specific kind of team or structure you're looking for?"
 
+Pin down target level explicitly — it's the first filter a recruiter applies, and an unpinned level makes the compensation number in step 8 unreadable (a Senior-plausible number can under-sell a Staff/Principal history):
+- "What level are you targeting — IC, tech lead, or management — and roughly what scope? (Senior / Staff / Principal, or your org's equivalent.)"
+- If their title history spans a range (e.g. Senior title now, Staff/Principal titles earlier), name the tension directly and ask which is the honest target rather than assuming either end.
+
 ### 2. What I'm Not Interested In
 
 This section is uniquely valuable and people tend to underspecify it. Push for real answers.
@@ -80,6 +84,10 @@ If they give a vague answer ("I don't want a bad culture"), probe:
 - "Are there types of roles you keep getting recruited for that you're not interested in?"
 
 The goal: specific, honest signals. "Not interested in Terraform-heavy infrastructure work" is useful. "Looking for good culture" is not.
+
+Also ask directly — these are standard recruiter-intake fields people rarely volunteer unprompted, and skipping them leaves obvious hard-reject filters uncaptured:
+- "Any industries or company types that are off the table for you — e.g. defense, gambling, crypto, adtech, anything values-based?"
+- "Any hard preferences or refusals on tech stack — ecosystems you want to stay in, or ones you're done with?"
 
 ### 3. Reasons for the Move
 

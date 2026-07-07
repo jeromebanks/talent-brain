@@ -32,7 +32,7 @@ Open the `talent-brain` folder in Claude Code. All skills load automatically —
 **2. Run init:**
 
 ```
-/talent-brain:tb-init
+/tb-init
 ```
 
 Claude will ask for your name, title, and location, then create your profile at `~/talent-brain-profile`, initialize git, and optionally push it to GitHub. Takes about 2 minutes.
@@ -47,19 +47,19 @@ Open `~/talent-brain-profile` in Claude Code (or Cowork). All Talent Brain skill
 
 **From an existing resume:**
 ```
-/talent-brain:ingest resume.pdf
+/ingest resume.pdf
 ```
 Accepts PDFs and LinkedIn data exports (`.zip` from LinkedIn's "Get a copy of your data"). You can run it on multiple files — older resumes often have detail that got trimmed from newer ones, and ingest takes the best from each.
 
 **From memory:**
 ```
-/talent-brain:excavate
+/excavate
 ```
 Claude interviews you about a role: what you built, what the impact was, what decisions you made. About 10 minutes per role. This is where depth that never makes it onto a resume gets captured.
 
 **Capture your intent:**
 ```
-/talent-brain:intent
+/intent
 ```
 A short conversation about what you actually want next — and what you're not interested in. Claude writes `intent.md` from your answers. This is the most valuable file in the profile and the one no resume can express.
 
@@ -69,25 +69,25 @@ A short conversation about what you actually want next — and what you're not i
 
 **Am I a good fit for this role?**
 ```
-/talent-brain:fit
+/fit
 ```
 Paste a job description when prompted. Returns an honest, evidence-backed assessment.
 
 **What's missing from my profile for this role?**
 ```
-/talent-brain:gap
+/gap
 ```
 Separates genuine gaps from things that are probably in your history but not captured yet.
 
 **Generate a resume for a specific role:**
 ```
-/talent-brain:generate
+/generate
 ```
 Paste a job description. Returns a tailored resume drawn from your full profile depth.
 
 **Write a cover letter:**
 ```
-/talent-brain:cover-letter
+/cover-letter
 ```
 Makes a specific argument for your candidacy — not a generic template.
 
@@ -101,14 +101,14 @@ Open your profile folder in Claude Code and start a Cowork session. Share the li
 
 To start the showcase:
 ```
-/talent-brain:showcase
+/showcase
 ```
 
 Claude opens with a pitch built around your strongest signals, then takes questions.
 
 **Via GitHub:**
 
-If your profile is on GitHub, anyone who clones it and opens the folder in Claude Code gets Talent Brain automatically — the skills are bundled in `.claude/skills/` and load without any plugin install. They run `/talent-brain:showcase` and go.
+If your profile is on GitHub, anyone who clones it and opens the folder in Claude Code gets Talent Brain automatically — the skills are bundled in `.claude/skills/` and load without any plugin install. They run `/showcase` and go.
 
 ---
 

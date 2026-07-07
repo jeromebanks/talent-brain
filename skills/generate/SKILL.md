@@ -1,17 +1,19 @@
 ---
 name: generate
-description: Generate a tailored resume for a specific job description, or a general-purpose resume if no JD is provided. Pulls from the full profile depth and positions the candidate's experience for the target role. Outputs clean Markdown suitable for conversion to PDF or copy-paste into an ATS. Use when a candidate needs a formatted resume document.
+description: Generate a tailored resume for a specific job description, or a general-purpose resume if no JD is provided. Pulls from the full profile depth and positions the candidate's experience for the target role. Outputs an ATS-safe HTML file, auto-converted to PDF via whatever CLI tool is available (headless Chrome/Chromium, wkhtmltopdf, or pandoc), no manual steps required. Use when a candidate needs a resume document to send or upload.
 ---
 
 # Talent Brain — Generate Resume
 
 You are generating a resume document from the candidate's Talent Brain profile. The output is tailored to a specific role if a JD is provided, or optimized as a strong general-purpose resume if not.
 
+**ATS-legibility beats cosmetics.** This tool exists partly to fight the failure mode where AI screeners misparse a visually "designed" resume and lose the signal in it. Every choice in this skill — layout, formatting, the conversion pipeline — optimizes for a parser reading the text cleanly, not for a human admiring the typography. Plain and correct beats polished and fragile.
+
 ## Inputs
 
-- `/talent-brain:generate` — generate a general-purpose resume
-- `/talent-brain:generate "senior ML engineer at fintech startup"` — generate tailored to a context description
-- `/talent-brain:generate [file or URL]` — generate tailored to a specific job description
+- `/generate` — generate a general-purpose resume
+- `/generate "senior ML engineer at fintech startup"` — generate tailored to a context description
+- `/generate [file or URL]` — generate tailored to a specific job description
 
 If a JD is provided as a file path or URL, read/fetch it first.
 
@@ -37,16 +39,15 @@ Before generating, identify:
 
 If no JD: identify the top 3 signals from the profile overall and build the summary around them.
 
-## Phase 3 — Generate the resume
+## Phase 3 — Generate the content
 
-### Format rules
+### Content rules
 
-- Output clean Markdown. Use `---` for section breaks, `###` for role headers.
 - Target length: 1 page for < 10 years experience, 2 pages for longer careers. Flag if the output is running long.
-- No photos, no graphics, no icons — these don't survive ATS parsing.
-- Contact line at top: name | location | email | linkedin | github (omit blanks).
+- Contact line at top: name | location | email | linkedin | github (omit blanks). If `RESUME.md` frontmatter lists multiple emails, use the first one listed as primary — don't guess or default to whichever looks more "professional."
 - Use the candidate's exact company names and titles from the profile — never paraphrase or invent.
 - Dates: `MM/YYYY – MM/YYYY` or `MM/YYYY – Present`. Consistent format throughout.
+- Consistent tense: past tense for past roles, present tense for the current role, throughout.
 
 ### Summary / Professional Profile (3–4 sentences)
 
@@ -87,38 +88,82 @@ Institution, degree, year. One line per entry. No GPA unless exceptional and rec
 
 If the profile has extensions (publications, patents, open source, speaking): include a brief section if relevant to the target role. Omit if not.
 
-## Phase 4 — ATS pass
+## Phase 4 — Render as ATS-safe HTML
 
-After generating, review the output for ATS compatibility:
-- Are keywords from the JD (where accurate) present in the text?
-- Are there any tables, special characters, or formatting that won't survive plain-text parsing?
-- Are all dates in consistent parseable format?
+Write a single, self-contained HTML file. This is the step that determines whether a parser can read the resume, so follow it exactly — do not add anything in the name of making it "look nicer."
 
-Note any ATS concerns at the end of the output.
+**Structure:**
+- One column. No CSS grid/flexbox columns, no sidebars, no tables for layout.
+- Semantic tags only: `<h1>` for name, `<p>` for the contact line, `<h2>` for section headers (Summary, Experience, Skills, Projects, Education), `<h3>` for role/company headers, `<ul><li>` for bullets.
+- Reading order in the HTML source must match visual reading order — no absolute positioning, no CSS that reorders content.
+- Real text only. No text embedded in images, no icons, no emoji standing in for words.
+- No headers/footers, no page-numbering tricks, no decorative borders or background colors/shading.
+
+**Minimal CSS budget** (inline `<style>` in `<head>`, nothing else): font stack, font size, line-height, margins, and heading weight. That's it. Something like:
+
+```html
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 11pt; line-height: 1.4; color: #000; max-width: 7.5in; margin: 0.5in auto; }
+  h1 { font-size: 18pt; margin-bottom: 0.1em; }
+  h2 { font-size: 13pt; border-bottom: 1px solid #000; margin-top: 1em; }
+  h3 { font-size: 11.5pt; margin-bottom: 0.1em; }
+  ul { margin-top: 0.2em; padding-left: 1.2em; }
+  @page { margin: 0.6in; }
+</style>
+```
+
+Adjust font size/margins only as needed to hit the target page count — never by cutting content in a way that omits real experience.
+
+## Phase 5 — Convert to PDF automatically
+
+Detect an available converter and use it — never ask the user to open a browser or convert anything by hand. Check in this order and use the first match:
+
+```bash
+detect_pdf_tool() {
+  for c in chromium chromium-browser google-chrome google-chrome-stable; do
+    command -v "$c" >/dev/null 2>&1 && { echo "$c"; return; }
+  done
+  for p in "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+           "/Applications/Chromium.app/Contents/MacOS/Chromium"; do
+    [ -x "$p" ] && { echo "$p"; return; }
+  done
+  command -v wkhtmltopdf >/dev/null 2>&1 && { echo "wkhtmltopdf"; return; }
+  command -v pandoc >/dev/null 2>&1 && { echo "pandoc"; return; }
+  echo ""
+}
+```
+
+Conversion command depends on which tool was found:
+- **Chrome/Chromium** (binary or app path): `"$TOOL" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf="<output>.pdf" "file://$(pwd)/<output>.html"`
+- **wkhtmltopdf**: `wkhtmltopdf "<output>.html" "<output>.pdf"`
+- **pandoc**: `pandoc "<output>.html" -o "<output>.pdf"`
+- **Nothing found**: skip conversion, keep the HTML file, and tell the user plainly which tool would unlock automatic PDF export (e.g., "Install Chrome or run `brew install pandoc` to get an automatic PDF next time — for now, open `resume.html` in any browser and use Print → Save as PDF"). This is a fallback for a machine with no converter, not the default path.
+
+After conversion, confirm the PDF actually has a real text layer, not a raster image — spot-check by noting the file was produced via a tool that renders live HTML/text (all of the above do); no separate verification step needed beyond confirming the command exited successfully and the file exists with nonzero size.
 
 ## Output
 
-Print the full resume in Markdown to the terminal. Then:
+- **No JD (general-purpose):** write `resume.html` and `resume.pdf` to the profile root, overwriting any existing versions. These are the canonical, always-current resume files.
+- **JD provided (tailored):** write to a job-specific filename in the current working directory (e.g. `resume-<company-or-role-slug>.html` / `.pdf`) — do not overwrite the canonical `resume.html`/`resume.pdf`, and do not commit these to the profile repo; they're one-off artifacts for a specific application.
+
+Print a short summary:
 
 ```
----
-Generated from profile as of [date].
+✓ Generated
+
+  resume.html  → [path]
+  resume.pdf   → [path]  (via [tool used])
 
 ATS notes: [any concerns, or "none identified"]
 
-To save: copy the above, or redirect to a file.
-To convert to PDF: paste into a Markdown editor (Typora, Obsidian, Marked 2) and export,
-or use: pandoc resume-output.md -o resume.pdf (requires pandoc + LaTeX)
-
-To regenerate with a different target: /talent-brain:generate [new jd]
+To regenerate with a different target: /generate [new jd]
 ```
-
-Do not automatically write files.
 
 ## Hard invariants
 
-1. **Never invent.** Every bullet, metric, and claim must come from the profile. If the profile is thin on a role, the resume will be thin on it too. The fix is `/talent-brain:excavate`, not fabrication.
+1. **Never invent.** Every bullet, metric, and claim must come from the profile. If the profile is thin on a role, the resume will be thin on it too. The fix is `/excavate`, not fabrication.
 2. **Use actual titles and company names.** Do not paraphrase, improve, or modernize them.
 3. **Do not include skills the candidate doesn't have** even if the JD asks for them.
 4. **Read the full experience files, not just summaries.** The depth is there for a reason.
-5. **Read-only.** This skill never writes to profile files.
+5. **ATS-safety overrides visual preference.** Single column, semantic HTML, minimal CSS, real text — no exceptions for a "nicer-looking" layout.
+6. **Writes only resume output files** (`resume.html`/`resume.pdf` or their job-specific variants) — never touches `RESUME.md`, `intent.md`, `skills.md`, or any `experience/`/`projects/` file.

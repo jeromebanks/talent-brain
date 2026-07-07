@@ -124,7 +124,7 @@ DEPTH AVAILABLE
 who wants to go deeper: "→ experience/gsk.md — AI infrastructure work, most relevant
 to the ML platform requirements"]
 
-Run /talent-brain:gap [jd] for a breakdown of what to develop or better capture for this role.
+Run /gap [jd] for a breakdown of what to develop or better capture for this role.
 ```
 
 ## Hard invariants

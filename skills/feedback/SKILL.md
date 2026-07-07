@@ -58,7 +58,7 @@ gh issue create \
 [if clear from context]
 
 ---
-*Filed via /talent-brain:feedback*
+*Filed via /feedback*
 ```
 
 If `gh` is not available or not authenticated, print the issue content and the manual URL:

@@ -27,7 +27,7 @@ If you are a human forking this schema: this document defines every file, every 
 ├── intent.md                   # Career preferences, direction, interest/disinterest layer
 ├── intent-private.md           # Optional, gitignored. Compensation and anything else not for a public repo
 ├── skills.md                   # Capability taxonomy with depth and recency signals
-├── resume.md                   # Optional. Rendered general-purpose resume, written by /talent-brain:publish
+├── resume.md                   # Optional. Rendered general-purpose resume, written by /publish
 │
 ├── experience/
 │   └── <company-slug>.md       # One file per employer, kebab-case slug
@@ -123,7 +123,7 @@ A compact, machine-readable index. Follows the [llms.txt convention](https://llm
 - [RESUME.md](RESUME.md): Full career index — experience, projects, skills summary, education
 - [intent.md](intent.md): Career preferences, interests, what I'm not interested in, directional goals
 - [skills.md](skills.md): Capability taxonomy with depth and recency signals
-- [resume.md](resume.md): Rendered general-purpose resume (optional, present only after /talent-brain:publish has run)
+- [resume.md](resume.md): Rendered general-purpose resume (optional, present only after /publish has run)
 
 ## Experience
 - [experience/<slug>.md](experience/<slug>.md): [Company name] — [title] ([start]–[end])
@@ -215,7 +215,7 @@ Lead with scale and impact. Link to deep-dive file.]
 
 ### `intent.md`
 
-The differentiating layer. Expresses preference and direction, not just capability history. Structured to answer the same questions a recruiter intake form asks — ranked priorities, reasons for the move, quantified job-search activity, timing, work authorization — because those are the fields that actually get used to triage a candidate. Written by `/talent-brain:intent` only; see that skill for the interview design and the "not a counseling session" invariant.
+The differentiating layer. Expresses preference and direction, not just capability history. Structured to answer the same questions a recruiter intake form asks — ranked priorities, reasons for the move, quantified job-search activity, timing, work authorization — because those are the fields that actually get used to triage a candidate. Written by `/intent` only; see that skill for the interview design and the "not a counseling session" invariant.
 
 **Frontmatter:**
 ```yaml
@@ -266,7 +266,7 @@ earliest possible start; search deadline if any; notice period/constraints.]
 
 Optional, gitignored by default (`tb-init` adds it to `.gitignore`). Holds intent content the candidate wants captured but not committed to a public repo — currently just compensation expectations. This is a lightweight, interim answer to the deferred "privacy controls" roadmap item below: a second file rather than per-section visibility flags, scoped to the one field (comp) where the tension between "capture it" and "it's a public GitHub file" is sharpest.
 
-Written by `/talent-brain:intent` alongside `intent.md`. **Never read by `generate`, `showcase`, or `publish`** — those produce shareable artifacts (resumes, READMEs, briefs) and comp expectations don't belong in any of them. It exists for the candidate's own reference and for direct verbal negotiation, not for agent-mediated sharing.
+Written by `/intent` alongside `intent.md`. **Never read by `generate`, `showcase`, or `publish`** — those produce shareable artifacts (resumes, READMEs, briefs) and comp expectations don't belong in any of them. It exists for the candidate's own reference and for direct verbal negotiation, not for agent-mediated sharing.
 
 **Frontmatter:**
 ```yaml
@@ -492,7 +492,7 @@ The following are intentionally deferred from v1.1:
 - **Privacy controls (partially addressed in v1.1)** — `intent-private.md` (gitignored) now covers the sharpest case, compensation expectations. Still deferred: per-section `visibility` frontmatter flags for anything else in `intent.md` that a candidate might want to keep out of a public repo (e.g. a pointed "What I'm Not Interested In" entry).
 - **`OPPORTUNITY.md`** — the role-graph counterpart to `RESUME.md`. Describes a role as a structured knowledge graph rather than a job description. Powers two-sided matching. Supply-side problem deferred.
 - **`education/` directory** — for profiles where education depth warrants its own files (doctoral research, thesis projects, relevant coursework).
-- **Career counseling skill** — a skill synthesizing `experience/` + `intent.md` + `BEHAVIOURAL.md` to help think through things like offer evaluation, negotiation strategy, or longer-term career strategy. Explicitly separate from `/talent-brain:intent`, which captures decision-useful signal quickly and is not a counseling conversation. Deferred — no design work started.
+- **Career counseling skill** — a skill synthesizing `experience/` + `intent.md` + `BEHAVIOURAL.md` to help think through things like offer evaluation, negotiation strategy, or longer-term career strategy. Explicitly separate from `/intent`, which captures decision-useful signal quickly and is not a counseling conversation. Deferred — no design work started.
 
 ---
 
@@ -501,7 +501,7 @@ The following are intentionally deferred from v1.1:
 ### 1.1 (2026-07-06)
 - **Experience file restructure**: `experience/<slug>.md` now uses `Context` / `Responsibilities` (optional) / `Contributions` sections with `what`/`stack`/`impact` atoms per named initiative. Replaces the older `Outcomes`, `Decisions & Tradeoffs`, `Tools & Methods`, `Team & Scope` sections (still tolerated for read compatibility, no longer written).
 - **Expanded atom** documented: a Contribution may carry `projects/`-style H4 sub-sections (`Problem` / `What I Built` / `Technical Decisions` / `Through-Line`) instead of the plain what/stack/impact lines, for employer-internal work with depth that can't become a public `projects/` file.
-- `resume.md` (the rendered output of `/talent-brain:publish`) added to the file tree and `llms.txt` manifest contract.
+- `resume.md` (the rendered output of `/publish`) added to the file tree and `llms.txt` manifest contract.
 - `publish` is responsible for refreshing a profile's `SCHEMA.md` copy from the plugin on each run, so schema updates propagate to existing profiles.
 
 ### 1.0 (2026-06-08)
